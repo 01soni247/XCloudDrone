@@ -14,11 +14,11 @@ GCCbPath=${MainPath}/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 KERNELNAME=Sea.Kernel
-export KBUILD_BUILD_USER=Asyanx
-export KBUILD_BUILD_HOST=#WeaboLu
-IMAGE=$(pwd)/lamer/out/arch/arm64/boot/Image.gz-dtb
-DTBO=$(pwd)/lamer/out/arch/arm64/boot/dtbo.img
-DTB=$(pwd)/lamer/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
+export KBUILD_BUILD_USER=Halo
+export KBUILD_BUILD_HOST=AyanK
+IMAGE=$(pwd)/merlin/out/arch/arm64/boot/Image.gz-dtb
+DTBO=$(pwd)/merlin/out/arch/arm64/boot/dtbo.img
+DTB=$(pwd)/merlim/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
@@ -46,7 +46,7 @@ export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
 # Compile
 compile(){
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel DI Mulai</code>"
-cd lamer
+cd merlin
 make -j$(nproc) O=out ARCH=arm64 merlin_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
     CC=clang \
@@ -65,6 +65,13 @@ make -j$(nproc) ARCH=arm64 O=out \
    fi
   git clone --depth=1 https://github.com/kentanglu/AnyKernel -b master-merlin AnyKernel 
 	cp $IMAGE AnyKernel
+}
+
+#Clean
+function clean() {
+    cd merlin
+    rm -rf out
+    cd ..
 }
 
 # Push kernel to channel
@@ -100,3 +107,4 @@ zipping
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push
+clean
