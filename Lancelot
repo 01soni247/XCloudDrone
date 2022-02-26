@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+#
+# Copyright (C) 2021 a xyzprjkt property
+#
+
+# Main
+MainPath=$(pwd)
+export LOCALVERSION=X2.5-Luna✨
+MainClangPath=${MainPath}/clang
+MainClangZipPath=${MainPath}/clang-zip
+ClangPath=${MainClangZipPath}
+GCCaPath=${MainPath}/GCC64
+GCCbPath=${MainPath}/GCC32
+MainZipGCCaPath=${MainPath}/GCC64-zip
+MainZipGCCbPath=${MainPath}/GCC32-zip
+export KERNELNAME=Sea-Kernel
+export KBUILD_BUILD_USER=Sabil29
+export KBUILD_BUILD_HOST=ColiSlur
+IMAGE=$(pwd)/la/out/arch/arm64/boot/Image.gz-dtb
+DTBO=$(pwd)/la/out/arch/arm64/boot/dtbo.img
+DTB=$(pwd)/la/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
+
+DATE=$(date +"%F-%S")
+START=$(date +"%s")
+PATH=${ClangPath}/bin:/usr/bin:${PATH}
+
+# Telegram
+export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
+
+tg_post_msg() {
+  curl -s -X POST "$BOT_MSG_URL" -d chat_id="$TG_CHAT_ID" \
+  -d "disable_web_page_preview=true" \
+  -d "parse_mode=html" \
+  -d text="$1"
+
+}
+
+# ClangInfo
+CLANG_VER="$("$ClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+LLD_VER="$("$ClangPath"/bin/ld.lld --version | head -n 1)"
+export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
+
+# Compile
+compile(){
+tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel DI Mulai</code>"
+cd la
+make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
+make -j$(nproc) ARCH=arm64 O=out \
+    CC=clang \
+    LD=ld.lld \
+    NM=llvm-nm \
+    STRIP=llvm-strip \
+    OBJCOPY=llvm-objcopy \
+    OBJDUMP=llvm-objdump \
+    CROSS_COMPILE=aarch64-linux-gnu- \
+    CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+
+   if ! [ -a "$IMAGE" ]; then
+	finerr
+	exit 1
+   fi
+git clone --depth=1 https://github.com/kentanglu/AnyKernel -b master-lancelot AnyKernel
+	cp $IMAGE AnyKernel
+}
+
+# Push kernel to channel
+function push() {
+    cd AnyKernel
+    ZIP=$(echo *.zip)
+    curl -F document=@$ZIP "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
+        -F chat_id="$TG_CHAT_ID" \
+        -F "disable_web_page_preview=true" \
+        -F "parse_mode=html" \
+        -F caption="Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> | <b>${KBUILD_COMPILER_STRING}</b>"
+}
+# Fin Error
+function finerr() {
+    curl -s -X POST "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
+        -d chat_id="$TG_CHAT_ID" \
+        -d "disable_web_page_preview=true" \
+        -d "parse_mode=markdown" \
+        -d text="Build throw an error(s)"
+    exit 1
+}
+
+# Zipping
+function zipping() {
+    cd AnyKernel || exit 1
+    zip -r9 [$LOCALVERSION]$KERNELNAME[Lancelot]$DATE.zip *
+    cd ..
+}
+compile
+zipping
+END=$(date +"%s")
+DIFF=$(($END - $START))
+push
