@@ -5,7 +5,7 @@
 
 # Main
 MainPath=$(pwd)
-export LOCALVERSION=X2.5-Luna✨
+export LOCALVERSION=X2.5,1-Luna✨
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
 ClangPath=${MainClangZipPath}
@@ -13,16 +13,16 @@ GCCaPath=${MainPath}/GCC64
 GCCbPath=${MainPath}/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
-export KERNELNAME=Sea-Kernel
-export KBUILD_BUILD_USER=Sabil29
-export KBUILD_BUILD_HOST=ColiSlur
-IMAGE=$(pwd)/la/out/arch/arm64/boot/Image.gz-dtb
-DTBO=$(pwd)/la/out/arch/arm64/boot/dtbo.img
-DTB=$(pwd)/la/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
+export KERNELNAME=Sea.Kernel
+export KBUILD_BUILD_USER=Halo
+export KBUILD_BUILD_HOST=Ayank
+IMAGE=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
+DTBO=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
+DTB=$(pwd)/lancelot/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH=${ClangPath}/bin:/usr/bin:${PATH}
+PATH=${GCCcPath}/bin:${GCCdPath}/bin:/usr/bin:${PATH}
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
@@ -43,7 +43,7 @@ export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
 # Compile
 compile(){
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel DI Mulai</code>"
-cd la
+cd lancelot
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
     CC=clang \
@@ -52,8 +52,9 @@ make -j$(nproc) ARCH=arm64 O=out \
     STRIP=llvm-strip \
     OBJCOPY=llvm-objcopy \
     OBJDUMP=llvm-objdump \
-    CROSS_COMPILE=aarch64-linux-gnu- \
-    CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+    CROSS_COMPILE=aarch64-linux-android-\
+    CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+    CLANG_TRIPLE=aarch64-linux-gnu-
 
    if ! [ -a "$IMAGE" ]; then
 	finerr

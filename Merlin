@@ -4,7 +4,7 @@
 #
 
 # Main
-export LOCALVERSION=X2.5-Luna✨
+export LOCALVERSION=X2.5,1-Luna✨
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
@@ -67,13 +67,6 @@ make -j$(nproc) ARCH=arm64 O=out \
 	cp $IMAGE AnyKernel
 }
 
-#Clean
-function clean() {
-    cd merlin
-    rm -rf out
-    cd ..
-}
-
 # Push kernel to channel
 function push() {
     cd AnyKernel
@@ -107,4 +100,3 @@ zipping
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push
-clean
