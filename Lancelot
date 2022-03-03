@@ -40,7 +40,7 @@ tg_post_msg() {
 compile(){
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel DI Mulai</code>"
 cd lancelot
-make -j$(nproc) O=out ARCH=arm64 merlin_defconfig
+make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
     CC=clang \
     LD=ld.lld \
@@ -56,7 +56,7 @@ make -j$(nproc) ARCH=arm64 O=out \
 	finerr
 	exit 1
    fi
-  git clone --depth=1 https://github.com/kentanglu/AnyKernel -b master-merlin AnyKernel 
+  git clone --depth=1 https://github.com/kentanglu/AnyKernel -b master-lancelot AnyKernel 
 	cp $IMAGE AnyKernel
 }
 
