@@ -16,6 +16,6 @@ steps:
    commands:
      - bash Source
      - bash Merlin
-     - rm -rf merlin AnyKernel
-     - sleep 10s
-     - bash Lancelot
+#     - rm -rf merlin AnyKernel
+#     - sleep 10s
+#     - bash Lancelot

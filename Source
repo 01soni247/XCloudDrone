@@ -18,8 +18,8 @@ MainZipGCCcPath=${MainPath}/GCC64z-zip
 MainZipGCCdPath=${MainPath}/GCC32z-zip
 
 CloneKernel(){
-    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Test_Kernel.git merlin
-    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Test_Kernel.git lancelot
+    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git merlin
+#    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git lancelot
 }
 
 CloneFourteenGugelClang(){
