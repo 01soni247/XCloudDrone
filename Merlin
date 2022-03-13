@@ -4,7 +4,7 @@
 #
 
 # Main
-export LOCALVERSION=X3.0-Hanna
+export LOCALVERSION=X3.0-Hanna😶‍🌫️
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
