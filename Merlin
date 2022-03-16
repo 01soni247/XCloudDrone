@@ -13,6 +13,7 @@ GCCaPath=${MainPath}/GCC64
 GCCbPath=${MainPath}/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
+CLANG_ROOTDIR=$(pwd)/clang
 KERNELNAME=Sea.Kernel
 export KBUILD_BUILD_USER=Halo
 export KBUILD_BUILD_HOST=AyanK
@@ -23,7 +24,7 @@ DEVICE_CODENAME=Merlinx
 
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
+PATH="${PATH}:$(pwd)/clang/bin"
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
@@ -42,15 +43,14 @@ tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel DI Mulai</code>"
 cd merlin
 make -j$(nproc) O=out ARCH=arm64 merlin_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
-    CC=clang \
-    LD=ld.lld \
-    NM=llvm-nm \
-    STRIP=llvm-strip \
-    OBJCOPY=llvm-objcopy \
-    OBJDUMP=llvm-objdump \
-    CROSS_COMPILE=aarch64-linux-android- \
-    CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-    CLANG_TRIPLE=aarch64-linux-gnu-
+    CC=${CLANG_ROOTDIR}/bin/clang \
+    LD=${CLANG_ROOTDIR}/bin/ld.lld \
+    NM=${CLANG_ROOTDIR}/bin/llvm-nm \
+    STRIP=${CLANG_ROOTDIR}/bin/llvm-strip \
+    OBJCOPY=${CLANG_ROOTDIR}/bin/llvm-objcopy \
+    OBJDUMP=${CLANG_ROOTDIR}/bin/llvm-objdump \
+    CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
+    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
