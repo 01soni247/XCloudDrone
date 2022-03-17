@@ -4,7 +4,7 @@
 #
 
 # Main
-export LOCALVERSION=X3.5-Kayla/uv
+export LOCALVERSION=X3.5-Kayla-uv
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
