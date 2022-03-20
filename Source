@@ -19,7 +19,7 @@ MainZipGCCcPath=${MainPath}/GCC64z-zip
 MainZipGCCdPath=${MainPath}/GCC32z-zip
 
 CloneKernel(){
-    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git merlin
+    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git -b 20210405/qk-l merlin
 #    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git lancelot
 }
 
