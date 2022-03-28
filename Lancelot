@@ -41,7 +41,7 @@ tg_post_msg() {
 
 # Compile
 compile(){
-tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel DI Mulai</code>"
+tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
 cd $LancelotP
 make -j$(nproc) O=out ARCH=arm64 merlin_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
@@ -64,7 +64,7 @@ make -j$(nproc) ARCH=arm64 O=out \
 
 # Push kernel to channel
 function push() {
-tg_post_msg "Sending file..."
+tg_post_msg "Sending file Lancelot..."
     cd AnyKernel
     ZIP=$(echo *.zip)
     curl -F document=@"$ZIP" \
@@ -86,7 +86,7 @@ function finerr() {
 
 # Zipping
 function zipping() {
-tg_post_msg "Zipping Kernel..."
+tg_post_msg "Zipping Kernel Lancelot..."
     cd AnyKernel || exit 1
     zip -r9 [$VERSION]Lancelot[$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
