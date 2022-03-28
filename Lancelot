@@ -4,8 +4,10 @@
 #
 
 # Main
-export LOCALVERSION=X3.0-Hanna
+export LOCALVERSION=🦐
+VERSION=XQ1.2-Shrimp
 MainPath=$(pwd)
+LancelotP=${MainPath}/lancelot
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
 ClangPath=${MainClangZipPath}
@@ -13,17 +15,18 @@ GCCaPath=${MainPath}/GCC64
 GCCbPath=${MainPath}/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
+CLANG_ROOTDIR=$(pwd)/clang
 KERNELNAME=Sea.Kernel
-export KBUILD_BUILD_USER=Halo
-export KBUILD_BUILD_HOST=AyanK
-IMAGE=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
-DTBO=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
+export KBUILD_BUILD_USER=Hallo
+export KBUILD_BUILD_HOST=SHIRO'S
+IMAGEL=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
+DTBOl=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/lancelot/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
-DEVICE_CODENAME=Lava
+DEVICE_CODENAME=Lancelot
 
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
+PATH="${PATH}:$(pwd)/clang/bin"
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
@@ -39,25 +42,24 @@ tg_post_msg() {
 # Compile
 compile(){
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel DI Mulai</code>"
-cd lancelot
-make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
+cd $LancelotP
+make -j$(nproc) O=out ARCH=arm64 merlin_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
-    CC=clang \
-    LD=ld.lld \
-    NM=llvm-nm \
-    STRIP=llvm-strip \
-    OBJCOPY=llvm-objcopy \
-    OBJDUMP=llvm-objdump \
-    CROSS_COMPILE=aarch64-linux-android- \
-    CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-    CLANG_TRIPLE=aarch64-linux-gnu-
+    CC=${CLANG_ROOTDIR}/bin/clang \
+    LD=${CLANG_ROOTDIR}/bin/ld.lld \
+    NM=${CLANG_ROOTDIR}/bin/llvm-nm \
+    STRIP=${CLANG_ROOTDIR}/bin/llvm-strip \
+    OBJCOPY=${CLANG_ROOTDIR}/bin/llvm-objcopy \
+    OBJDUMP=${CLANG_ROOTDIR}/bin/llvm-objdump \
+    CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
+    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGE" ]; then
 	finerr
 	exit 1
    fi
   git clone --depth=1 https://github.com/kentanglu/AnyKernel -b master-lancelot AnyKernel 
-	cp $IMAGE AnyKernel
+	cp $IMAGEL AnyKernel
 }
 
 # Push kernel to channel
@@ -86,7 +88,7 @@ function finerr() {
 function zipping() {
 tg_post_msg "Zipping Kernel..."
     cd AnyKernel || exit 1
-    zip -r9 [$LOCALVERSION]Lava[$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]Lancelot[$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 compile
