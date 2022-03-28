@@ -43,7 +43,7 @@ tg_post_msg() {
 compile(){
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
 cd $LancelotP
-make -j$(nproc) O=out ARCH=arm64 merlin_defconfig
+make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
     LD=${CLANG_ROOTDIR}/bin/ld.lld \
