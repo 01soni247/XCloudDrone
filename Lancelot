@@ -4,7 +4,7 @@
 #
 
 # Main
-export LOCALVERSION=🦐
+export LOCALVERSION=🥀
 VERSION=XQ1.2-Shrimp
 MainPath=$(pwd)
 LancelotP=${MainPath}/lancelot
