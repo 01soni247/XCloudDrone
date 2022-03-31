@@ -4,8 +4,8 @@
 #
 
 # Main
-export LOCALVERSION=🦐
-VERSION=XQ1.2-Shrimp
+export LOCALVERSION=🐙
+VERSION=XQ1.3-Octopus
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
@@ -15,7 +15,7 @@ GCCbPath=${MainPath}/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 CLANG_ROOTDIR=$(pwd)/clang
-KERNELNAME=Sea.Kernel
+KERNELNAME=Sea
 export KBUILD_BUILD_USER=Hallo
 export KBUILD_BUILD_HOST=SHIROs
 IMAGE=$(pwd)/merlin/out/arch/arm64/boot/Image.gz-dtb
