@@ -4,8 +4,8 @@
 #
 
 # Main
-export LOCALVERSION=🥀
-VERSION=XQ1.2-Shrimp
+export LOCALVERSION=🐙
+VERSION=XQ1.3-Octopus
 MainPath=$(pwd)
 LancelotP=${MainPath}/lancelot
 MainClangPath=${MainPath}/clang
@@ -16,7 +16,7 @@ GCCbPath=${MainPath}/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 CLANG_ROOTDIR=$(pwd)/clang
-KERNELNAME=Sea.Kernel
+KERNELNAME=Sea
 export KBUILD_BUILD_USER=Hallo
 export KBUILD_BUILD_HOST=SHIROs
 IMAGEL=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
