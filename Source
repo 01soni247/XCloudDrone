@@ -40,8 +40,7 @@ CloneAtomClang(){
 }
 
 CloneGKClang(){
-    git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b proton-clang-11 clang
-}
+    git clone --depth=1 https://github.com/GengKapak/GengKapak-clang clang
 
 CloneCompiledGccTwelve(){
     git clone --depth=1 https://github.com/kentanglu/aarch64-linux-android-4.9 $GCCaPath
