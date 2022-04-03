@@ -40,7 +40,8 @@ CloneAtomClang(){
 }
 
 CloneGKClang(){
-    git clone --depth=1 https://github.com/GengKapak/GengKapak-clang clang
+    git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
+}
 
 CloneCompiledGccTwelve(){
     git clone --depth=1 https://github.com/kentanglu/aarch64-linux-android-4.9 $GCCaPath
