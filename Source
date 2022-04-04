@@ -43,9 +43,9 @@ CloneGKClang(){
     git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
 }
 
-CloneCompiledGccTwelve(){
-    git clone --depth=1 https://github.com/kentanglu/aarch64-linux-android-4.9 $GCCaPath
-    git clone --depth=1 https://github.com/kentanglu/arm-linux-androideabi-4.9 $GCCbPath
+CloneCompiledEvaGcc(){
+    git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 $GCCaPath
+    git clone --depth=1 https://github.com/mvaisakh/gcc-arm $GCCbPath
 }
 
 START=$(date +"%s")
@@ -58,7 +58,7 @@ tg_post_msg() {
 }
 CloneKernel
 # CloneFourteenGugelClang
-# CloneCompiledGccTwelve
+# CloneCompiledEvaGcc
 # CloneSeaClang
 CloneGKClang
 END=$(date +"%s")
