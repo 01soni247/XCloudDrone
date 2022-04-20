@@ -5,7 +5,7 @@
 
 # Main
 export LOCALVERSION=🐙
-VERSION=XQ1.3-Octopus
+VERSION=XQ1.4-Bubble
 MainPath=$(pwd)
 LancelotP=${MainPath}/lancelot
 MainClangPath=${MainPath}/clang
