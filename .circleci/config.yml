@@ -8,7 +8,6 @@ jobs:
           command: |
             branch=$CIRCLE_BRANCH
             git clone https://$githubKey@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git -b $branch builder_kernel --depth=1
-            git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
             cd builder_kernel
             source Lancelot
           no_output_timeout : 5h
