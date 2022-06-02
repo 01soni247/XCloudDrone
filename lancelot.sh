@@ -17,7 +17,7 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 CLANG_ROOTDIR=$(pwd)/clang
 KERNELNAME=Sea
 export KBUILD_BUILD_USER=Hallo
-export KBUILD_BUILD_HOST=SHIROs
+export KBUILD_BUILD_HOST=Luna
 IMAGEL=$(pwd)/builder_kernel/out/arch/arm64/boot/Image.gz-dtb
 DTBOl=$(pwd)/builder_kernel/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/builder_kernel/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
@@ -25,7 +25,6 @@ DEVICE_CODENAME=Lancelot
 
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
-PATH="${PATH}:$(pwd)/clang/bin"
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
@@ -40,6 +39,8 @@ tg_post_msg() {
 
 # Compile
 compile(){
+git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
+PATH="${PATH}:$(pwd)/clang/bin"
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
