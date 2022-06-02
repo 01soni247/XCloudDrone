@@ -7,7 +7,6 @@
 export LOCALVERSION=🐙
 VERSION=XQ1.4-Bubble
 MainPath=$(pwd)
-LancelotP=${MainPath}/lancelot
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
 ClangPath=${MainClangZipPath}
@@ -19,9 +18,9 @@ CLANG_ROOTDIR=$(pwd)/clang
 KERNELNAME=Sea
 export KBUILD_BUILD_USER=Hallo
 export KBUILD_BUILD_HOST=SHIROs
-IMAGEL=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
-DTBOl=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
-DTB=$(pwd)/lancelot/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
+IMAGEL=$(pwd)/builder_kernel/out/arch/arm64/boot/Image.gz-dtb
+DTBOl=$(pwd)/builder_kernel/out/arch/arm64/boot/dtbo.img
+DTB=$(pwd)/builder_kernel/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 DEVICE_CODENAME=Lancelot
 
 DATE=$(date +"%F-%S")
@@ -42,7 +41,6 @@ tg_post_msg() {
 # Compile
 compile(){
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
-cd $LancelotP
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
