@@ -18,12 +18,6 @@ CLANG_ROOTDIR=$(pwd)/clang
 MainZipGCCcPath=${MainPath}/GCC64z-zip
 MainZipGCCdPath=${MainPath}/GCC32z-zip
 
-CloneKernel(){
-    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git -b 20210405/qk-l merlin
-    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git -b 20210405/qk-l lancelot
-#    git clone --depth=1 https://$GITHUB_TOKEN@github.com/kentanglu/Sea_Kernel-BN.git lancelot
-}
-
 CloneFourteenGugelClang(){
     ClangPath=${MainClangZipPath}
     [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
@@ -56,7 +50,6 @@ tg_post_msg() {
   -d "parse_mode=html" \
   -d text="$1"
 }
-CloneKernel
 # CloneFourteenGugelClang
 # CloneCompiledEvaGcc
 # CloneSeaClang
