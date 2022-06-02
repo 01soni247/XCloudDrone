@@ -18,9 +18,9 @@ CLANG_ROOTDIR=$(pwd)/clang
 KERNELNAME=Sea
 export KBUILD_BUILD_USER=Hallo
 export KBUILD_BUILD_HOST=Luna
-IMAGEL=$(pwd)/builder_kernel/out/arch/arm64/boot/Image.gz-dtb
-DTBOl=$(pwd)/builder_kernel/out/arch/arm64/boot/dtbo.img
-DTB=$(pwd)/builder_kernel/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
+IMAGEL=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
+DTBOl=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
+DTB=$(pwd)/lancelot/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 DEVICE_CODENAME=Lancelot
 
 DATE=$(date +"%F-%S")
@@ -40,7 +40,9 @@ tg_post_msg() {
 # Compile
 compile(){
 git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
+git clone --depth=1 https://$githubKey@github.com/kentanglu/Sea_Kernel-BN.git -b 20210405/qk-l lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
+cd lancelot
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
