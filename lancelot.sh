@@ -4,8 +4,8 @@
 #
 
 # Main
-export LOCALVERSION=🐙
-VERSION=XQ1.4-Bubble
+export LOCALVERSION=🦑
+VERSION=WQ1-Sotong
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
