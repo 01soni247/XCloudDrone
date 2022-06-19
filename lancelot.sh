@@ -5,7 +5,7 @@
 
 # Main
 export LOCALVERSION=🦑
-VERSION=WQ1-Sotong
+VERSION=XQ1.5-Sotong
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
@@ -40,7 +40,7 @@ tg_post_msg() {
 # Compile
 compile(){
 git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
-git clone --depth=1 https://$githubKey@github.com/kentanglu/Sea_Kernel-BN.git -b 20210405/qk-l lancelot
+git clone --depth=1 https://github.com/Kentanglu/Sea-XQ-NON.git
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
