@@ -40,7 +40,7 @@ tg_post_msg() {
 # Compile
 compile(){
 git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ-NON.git
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ-NON.git lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
