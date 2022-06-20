@@ -5,7 +5,7 @@
 
 # Main
 export LOCALVERSION=🦑
-VERSION=XQ1.5-Sotong
+VERSION=XQ1.5b2-Sotong
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
