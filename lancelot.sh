@@ -4,8 +4,8 @@
 #
 
 # Main
-export LOCALVERSION=🦑
-VERSION=XQ1.5b2-Sotong
+export LOCALVERSION=🪨
+VERSION=XQ1.6-Batu
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
@@ -17,7 +17,7 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 CLANG_ROOTDIR=$(pwd)/clang
 KERNELNAME=Sea
 export KBUILD_BUILD_USER=Hallo
-export KBUILD_BUILD_HOST=Luna
+export KBUILD_BUILD_HOST=Bot
 IMAGEL=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
 DTBOl=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/lancelot/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
@@ -40,7 +40,7 @@ tg_post_msg() {
 # Compile
 compile(){
 git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ-NON.git lancelot
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
 tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
