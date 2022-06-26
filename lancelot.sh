@@ -39,7 +39,7 @@ tg_post_msg() {
 
 # Compile
 compile(){
-git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
+git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 13 clang
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
