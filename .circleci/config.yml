@@ -1,3 +1,4 @@
+version: 2.1
 jobs:
   compile:
    docker:
@@ -8,7 +9,7 @@ jobs:
             branch=$CIRCLE_BRANCH
             git clone https://$githubKey@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git -b $branch builder_kernel --depth=1
             cd builder_kernel
-            source lancelot.sh
+            . lancelot.sh
           no_output_timeout : 5h
 workflows:
   version: 2.1
