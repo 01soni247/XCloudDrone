@@ -5,7 +5,7 @@
 
 # Main
 export LOCALVERSION=🪨
-VERSION=XQ1.6S-Batu
+VERSION=XQ1.6-Batu
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
@@ -16,8 +16,8 @@ MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 CLANG_ROOTDIR=$(pwd)/clang
 KERNELNAME=Sea
-export KBUILD_BUILD_USER=Ha
-export KBUILD_BUILD_HOST=Bot
+export KBUILD_BUILD_USER=LopeYu
+export KBUILD_BUILD_HOST=Kamuh
 IMAGEL=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
 DTBOl=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/lancelot/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
