@@ -43,7 +43,7 @@ git clone --depth=1 https://gitlab.com/RyuujiX/atom-x-clang clang
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
-tg_post_msg "<b>xKernelCompiler:</b><code>Compile Kernel Lancelot DI Mulai</code>"
+tg_post_msg "<b>XCloudDrone:</b><code>Kernel Lancelot DI Mulai</code>"
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
