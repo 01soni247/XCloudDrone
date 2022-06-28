@@ -5,7 +5,7 @@
 
 # Main
 export LOCALVERSION=🪨
-VERSION=XQ1.6-Batu
+VERSION=XQ1.6-Kayla
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
