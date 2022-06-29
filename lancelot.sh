@@ -4,8 +4,8 @@
 #
 
 # Main
-export LOCALVERSION=🪨
-VERSION=XQ1.6-Kayla
+export LOCALVERSION=💧
+VERSION=XQ2.0-Last
 MainPath=$(pwd)
 MainClangPath=${MainPath}/clang
 MainClangZipPath=${MainPath}/clang-zip
