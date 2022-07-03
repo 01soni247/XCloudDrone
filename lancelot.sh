@@ -4,14 +4,14 @@
 #
 
 # Main
-export LOCALVERSION=💧
-VERSION=XQ2.0-Last
+export LOCALVERSION=⛔
+VERSION=XQB1
 MainPath=$(pwd)
-MainClangPath=${MainPath}/clang
+MainClangPath=${MainPath}/toolchains/clang
 MainClangZipPath=${MainPath}/clang-zip
-ClangPath=${MainClangZipPath}
-GCCaPath=${MainPath}/GCC64
-GCCbPath=${MainPath}/GCC32
+ClangPath=${MainClangPath}
+GCCaPath=${MainPath}toolchains/GCC64
+GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 CLANG_ROOTDIR=$(pwd)/clang
@@ -39,10 +39,10 @@ tg_post_msg() {
 
 # Compile
 compile(){
-git clone --depth=1 https://gitlab.com/RyuujiX/atom-x-clang clang
+git clone --depth=1 https://gitlab.com/ElectroPerf/atom-x-clang $ClangPath
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git lancelot
-PATH="${PATH}:$(pwd)/clang/bin"
-cd lancelot
+PATH="${PATH}:${ClangPath}/bin"
+Pcd lancelot
 tg_post_msg "<b>XCloudDrone:</b><code>Kernel Lancelot DI Mulai</code>"
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
