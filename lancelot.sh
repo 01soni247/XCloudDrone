@@ -4,7 +4,7 @@
 #
 
 # Main
-export LOCALVERSION=⛔
+export LOCALVERSION=B1🤫
 VERSION=XQB1
 MainPath=$(pwd)
 MainClangPath=${MainPath}/toolchains/clang
@@ -56,7 +56,7 @@ make -j$(nproc) ARCH=arm64 O=out \
     CROSS_COMPILE_ARM32=${ClangPath}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGEL" ]; then
-	finerr
+	errorr
 	exit 1
    fi
   git clone --depth=1 https://github.com/kentanglu/AnyKernel -b master-lancelot AnyKernel 
@@ -76,8 +76,10 @@ tg_post_msg "Sending file Lancelot..."
 }
 
 # Fin Error
-function finerr() {
-    curl -d document=@"out/error.log" \
+function errorr() {
+    cd out
+    LOG=$(echo *.log)
+    curl -d document=@"$LOG" \
         -d chat_id="$TG_CHAT_ID" \
         -d "disable_web_page_preview=true" \
         -d parse_mode=markdown https://api.telegram.org/bot$TG_TOKEN/sendDocument \
