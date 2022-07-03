@@ -42,18 +42,18 @@ compile(){
 git clone --depth=1 https://gitlab.com/ElectroPerf/atom-x-clang $ClangPath
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git lancelot
 PATH="${PATH}:${ClangPath}/bin"
-Pcd lancelot
+cd lancelot
 tg_post_msg "<b>XCloudDrone:</b><code>Kernel Lancelot DI Mulai</code>"
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
-    CC=${CLANG_ROOTDIR}/bin/clang \
-    LD=${CLANG_ROOTDIR}/bin/ld.lld \
-    NM=${CLANG_ROOTDIR}/bin/llvm-nm \
-    STRIP=${CLANG_ROOTDIR}/bin/llvm-strip \
-    OBJCOPY=${CLANG_ROOTDIR}/bin/llvm-objcopy \
-    OBJDUMP=${CLANG_ROOTDIR}/bin/llvm-objdump \
-    CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
-    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
+    CC=${ClangPath}/bin/clang \
+    LD=${ClangPath}/bin/ld.lld \
+    NM=${ClangPath}/bin/llvm-nm \
+    STRIP=${ClangPath}/bin/llvm-strip \
+    OBJCOPY=${ClangPath}/bin/llvm-objcopy \
+    OBJDUMP=${ClangPath}/bin/llvm-objdump \
+    CROSS_COMPILE=${ClangPath}/bin/aarch64-linux-gnu- \
+    CROSS_COMPILE_ARM32=${ClangPath}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGEL" ]; then
 	finerr
