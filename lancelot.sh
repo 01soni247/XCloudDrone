@@ -4,8 +4,8 @@
 #
 
 # Main
-export LOCALVERSION=B1🤫
-VERSION=XQB1
+export LOCALVERSION=🐧
+VERSION=XQ1.5z
 MainPath=$(pwd)
 MainClangPath=${MainPath}/toolchains/clang
 MainClangZipPath=${MainPath}/clang-zip
