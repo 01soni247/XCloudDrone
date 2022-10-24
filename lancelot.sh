@@ -43,7 +43,7 @@ git clone --depth=1 https://gitlab.com/RyuujiX/atom-x-clang clang
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
-tg_post_msg "<b>XCloudDrone:</b><code>Kernel Lancelot DI Mulai</code>"
+tg_post_msg "<b>XCloudDrone:</b><code>Build R9 DI Mulai</code>"
 make -j$(nproc) O=out ARCH=arm64 lancelot_defconfig
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
@@ -65,7 +65,7 @@ make -j$(nproc) ARCH=arm64 O=out \
 
 # Push kernel to channel
 function push() {
-tg_post_msg "Sending file Lancelot..."
+tg_post_msg "Mengirim Kernel Lancelot..."
     cd AnyKernel
     ZIP=$(echo *.zip)
     curl -F document=@"$ZIP" \
@@ -89,7 +89,7 @@ function errorr() {
 
 # Zipping
 function zipping() {
-tg_post_msg "Zipping Kernel Lancelot..."
+tg_post_msg "Proses Zipping Kernel R9..."
     cd AnyKernel || exit 1
     zip -r9 [$VERSION]Lancelot[$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
