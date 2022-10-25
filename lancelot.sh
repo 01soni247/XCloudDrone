@@ -39,7 +39,7 @@ tg_post_msg() {
 
 # Compile
 compile(){
-git clone --depth=1 https://gitlab.com/RyuujiX/atom-x-clang clang
+git clone --depth=1 https://gitlab.com/ElectroPerf/atom-x-clang clang
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
