@@ -91,7 +91,7 @@ function errorr() {
 function zipping() {
 tg_post_msg "Proses Zipping Kernel R9..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]Lancelot[TESTSOURCE][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]Lancelot[HotTEST][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 compile
