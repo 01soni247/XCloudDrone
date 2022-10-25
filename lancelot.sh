@@ -5,7 +5,7 @@
 
 # Main
 export LOCALVERSION=🐊
-VERSION=XQ1.5Zp
+VERSION=XQ1.5T
 MainPath=$(pwd)
 MainClangPath=${MainPath}/toolchains/clang
 MainClangZipPath=${MainPath}/clang-zip
@@ -40,7 +40,7 @@ tg_post_msg() {
 # Compile
 compile(){
 git clone --depth=1 https://gitlab.com/RyuujiX/atom-x-clang clang
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main lancelot
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ-NON.git -b main lancelot
 PATH="${PATH}:$(pwd)/clang/bin"
 cd lancelot
 tg_post_msg "<b>XCloudDrone:</b><code>Build R9 DI Mulai</code>"
@@ -91,7 +91,7 @@ function errorr() {
 function zipping() {
 tg_post_msg "Proses Zipping Kernel R9..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]Lancelot[HOTFIX][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]Lancelot[TESTSOURCE][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 compile
