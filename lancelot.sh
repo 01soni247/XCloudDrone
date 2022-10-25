@@ -65,7 +65,7 @@ make -j$(nproc) ARCH=arm64 O=out \
 
 # Push kernel to channel
 function push() {
-tg_post_msg "Mengirim Kernel Lancelot..."
+tg_post_msg "Mengirim Kernel R9..."
     cd AnyKernel
     ZIP=$(echo *.zip)
     curl -F document=@"$ZIP" \
