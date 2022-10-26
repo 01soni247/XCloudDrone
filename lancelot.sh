@@ -4,8 +4,8 @@
 #
 
 # Main
-export LOCALVERSION=🐊
-VERSION=XQ1.5T
+export LOCALVERSION=💫
+VERSION=XQ1.5z
 MainPath=$(pwd)
 MainClangPath=${MainPath}/toolchains/clang
 MainClangZipPath=${MainPath}/clang-zip
@@ -91,7 +91,7 @@ function errorr() {
 function zipping() {
 tg_post_msg "Proses Zipping Kernel R9..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]Lancelot[Pejantan][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]Lancelot[Keysha][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 compile
