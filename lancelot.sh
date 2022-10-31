@@ -13,9 +13,6 @@ GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 
-# Clone Compiler
-git clone --depth=1 https://gitlab.com/RyuujiX/atom-x-clang clang
-
 #Main2
 VERSION=XQ1.6
 KERNELNAME=Sea
