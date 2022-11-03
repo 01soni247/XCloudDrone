@@ -10,7 +10,7 @@ jobs:
             git clone https://$githubKey@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git -b $branch builder_kernel --depth=1
             cd builder_kernel
             . play.sh
-            . lancelot.sh
+            . build.sh
           no_output_timeout : 5h
 workflows:
   version: 2.1
