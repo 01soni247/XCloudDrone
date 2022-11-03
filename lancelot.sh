@@ -13,15 +13,6 @@ GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 
-#Clone Source
-clone(){
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main lancelot
-cd lancelot
-}
-
-#info
-tg_post_msg "<b>XCloudDrone</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${CLANG_ROOTDIR}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
-
 #Main2
 VERSION=XQ1.6Plus
 KERNEL_NAME=Sea
@@ -34,14 +25,20 @@ CLANG_ROOTDIR=$(pwd)/clang
 CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 LLD_VER="$("$CLANG_ROOTDIR"/bin/ld.lld --version | head -n 1)"
 export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
-IMAGEL=$(pwd)/lancelot/out/arch/arm64/boot/Image.gz-dtb
-DTBOl=$(pwd)/lancelot/out/arch/arm64/boot/dtbo.img
-DTB=$(pwd)/lancelot/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
+IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
+DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
+DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
+
+#Clone Source
+clone(){
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
+cd $DEVICE_CODENAME
+}
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
@@ -53,6 +50,10 @@ tg_post_msg() {
   -d text="$1"
 
 }
+
+# Massage
+tg_post_msg "<b>XCloudDrone</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${CLANG_ROOTDIR}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
+
 
 # Compile
 compile(){
@@ -70,17 +71,17 @@ make -j$(nproc) ARCH=arm64 O=out \
     CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi- \
     2>&1 | tee error.log
 
-   if ! [ -a "$IMAGEL" ]; then
+   if ! [ -a "$IMAGE" ]; then
 	errorr
 	exit 1
    fi
-  git clone --depth=1 https://github.com/kentanglu/AnyKernel -b master-lancelot AnyKernel 
-	cp $IMAGEL AnyKernel
+  git clone --depth=1 https://github.com/kentanglu/AnyKernel -b $DEVICE_CODENAME AnyKernel 
+	cp $IMAGE AnyKernel
 }
 
 # Push kernel to channel
 function push() {
-tg_post_msg "Mengirim Kernel R9..."
+tg_post_msg "Mengirim Kernel $DEVICE_CODENAME..."
     cd AnyKernel
     ZIP=$(echo *.zip)
     curl -F document=@"$ZIP" \
@@ -105,7 +106,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 
 # Zipping
 function zipping() {
-tg_post_msg "Proses Zipping Kernel R9..."
+tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
     zip -r9 [$VERSION]Lancelot[Keysha][$KERNEL_NAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
