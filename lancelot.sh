@@ -13,9 +13,19 @@ GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 
+#Clone Source
+clone(){
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main lancelot
+cd lancelot
+}
+
+#info
+tg_post_msg "<b>XCloudDrone</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${CLANG_ROOTDIR}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
+
 #Main2
-VERSION=XQ1.6
-KERNELNAME=Sea
+VERSION=XQ1.6Plus
+KERNEL_NAME=Sea
+export LOCALVERSION=🦭
 KERNEL_ROOTDIR=$(pwd)
 DEVICE_DEFCONFIG=lancelot_defconfig
 DEVICE_CODENAME=Lancelot
@@ -44,16 +54,10 @@ tg_post_msg() {
 
 }
 
-# Post Main Information
-tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${CLANG_ROOTDIR}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
-
 # Compile
 compile(){
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main lancelot
+tg_post_msg "<b>XCloudDrone:</b><code>Compile R9 DI Mulai</code>"
 PATH="${PATH}:$(pwd)/clang/bin"
-cd lancelot
-export LOCALVERSION=🦭
-tg_post_msg "<b>XCloudDrone:</b><code>Build R9 DI Mulai</code>"
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
@@ -83,11 +87,12 @@ tg_post_msg "Mengirim Kernel R9..."
         -F chat_id="$TG_CHAT_ID" \
         -F "disable_web_page_preview=true" \
         -F parse_mode=markdown https://api.telegram.org/bot$TG_TOKEN/sendDocument \
-        -F caption="✨Compile took $(($DIFF / 60)) Minute(s) and $(($DIFF % 60)) second(s). | For $DEVICE_CODENAME | ${DATE}✨"
+        -F caption="✨Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> | <b>${KBUILD_COMPILER_STRING}</b>✨"
 }
 
 # Fin Error
 function errorr() {
+tg_post_msg "Terjadi Error Dalam Proses Compile❌"
     cd out
     LOG=$(echo error.log)
     curl -d document=@"$LOG" \
@@ -102,9 +107,10 @@ function errorr() {
 function zipping() {
 tg_post_msg "Proses Zipping Kernel R9..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]Lancelot[Keysha][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]Lancelot[Keysha][$KERNEL_NAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
+clone
 compile
 zipping
 END=$(date +"%s")
