@@ -16,14 +16,10 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
 
-#Clone Source
-clone(){
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
-}
-
 #Main2
 VERSION=XQ1.6Plus
-KERNEL_NAME=Sea
+KERNELNAME=Sea
+RANDOMNAME=Feriska
 export LOCALVERSION=🦭
 KERNEL_ROOTDIR=$(pwd)
 DEVICE_DEFCONFIG=lancelot_defconfig
@@ -53,6 +49,7 @@ tg_post_msg() {
 # Compile
 compile(){
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
 cd $DEVICE_CODENAME
 PATH="${PATH}:$(pwd)/clang/bin"
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
@@ -104,7 +101,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]Lancelot[Keysha][$KERNEL_NAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]Lancelot[$RANDOMNAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 clone
