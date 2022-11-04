@@ -104,7 +104,6 @@ tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     zip -r9 [$VERSION]Lancelot[$RANDOMNAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
-clone
 compile
 zipping
 END=$(date +"%s")
