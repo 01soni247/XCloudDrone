@@ -17,7 +17,7 @@ DATE=$(date +"%F-%S")
 START=$(date +"%s")
 
 #Main2
-VERSION=XQ1.6Plus
+VERSION=XQ1.6T
 KERNELNAME=Sea
 RANDOMNAME=Feriska
 export LOCALVERSION=🦭
