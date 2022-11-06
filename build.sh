@@ -14,12 +14,18 @@ GCCaPath=${MainPath}toolchains/GCC64
 GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
-
-DATE=$(date +"%F-%S")
 START=$(date +"%s")
+
+# Cloning Source
+clone(){
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
+cd $DEVICE_CODENAME
+}
 
 #Main2
 MODEL="Redmi 9"
+VERSION=XQ1.6u
+KERNELNAME=Sea
 DEVICE_DEFCONFIG=lancelot_defconfig
 DEVICE_CODENAME=Lancelot
 export KBUILD_BUILD_USER=Asyanx
@@ -34,9 +40,10 @@ DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 DISTRO=$(source /etc/os-release && echo "${NAME}")
 
-#Main3
-VERSION=XQ1.6u
-KERNELNAME=Sea
+# Date
+export TZ=Asia/Jakarta
+DATE="$(date +"%A, %d %b %Y")"
+ZDATE="$(date "+%Y%m%d")"
 
 #Check Kernel Version
 KERVER=$(make kernelversion)
@@ -72,8 +79,6 @@ tg_post_msg "
 
 # Compile
 compile(){
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
-cd $DEVICE_CODENAME
 PATH="${PATH}:$(pwd)/clang/bin"
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
@@ -128,6 +133,7 @@ function zipping() {
     zip -r9 [$VERSION]Lancelot[$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
+clone
 compile
 zipping
 END=$(date +"%s")
