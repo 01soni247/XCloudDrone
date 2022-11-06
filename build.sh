@@ -5,9 +5,11 @@
 
 # Main
 MainPath=$(pwd)
+KERNEL_ROOTDIR=$(pwd)
+CLANG_ROOTDIR=$(pwd)/clang
+ClangPath=${MainClangPath}
 MainClangPath=${MainPath}/toolchains/clang
 MainClangZipPath=${MainPath}/clang-zip
-ClangPath=${MainClangPath}
 GCCaPath=${MainPath}toolchains/GCC64
 GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
@@ -17,23 +19,29 @@ DATE=$(date +"%F-%S")
 START=$(date +"%s")
 
 #Main2
-VERSION=XQ1.6u
-KERNELNAME=Sea
-RANDOMNAME=Feriska
-export LOCALVERSION=/Feriska🍃
-KERNEL_ROOTDIR=$(pwd)
+MODEL="Redmi 9"
 DEVICE_DEFCONFIG=lancelot_defconfig
 DEVICE_CODENAME=Lancelot
+export KBUILD_BUILD_USER=Asyanx
+export KBUILD_BUILD_HOST=CircleCi
+export LOCALVERSION=/Feriska🍃
 export KERNEL_NAME=$(cat "arch/arm64/configs/$DEVICE_DEFCONFIG" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
-CLANG_ROOTDIR=$(pwd)/clang
 CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 LLD_VER="$("$CLANG_ROOTDIR"/bin/ld.lld --version | head -n 1)"
 export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
-export KBUILD_BUILD_USER=Asyanx
-export KBUILD_BUILD_HOST=CircleCi
+DISTRO=$(source /etc/os-release && echo "${NAME}")
+
+#Main3
+VERSION=XQ1.6u
+KERNELNAME=Sea
+
+#Check Kernel Version
+KERVER=$(make kernelversion)
+TERM=xterm
+PROCS=$(nproc --all)
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
@@ -46,9 +54,24 @@ tg_post_msg() {
 
 }
 
+# Post Main Information
+tg_post_msg "
+<b>+----- Starting-Compilation -----+</b>
+<b>• Date</b> : <code>$DATE</code>
+<b>• Docker OS</b> : <code>$DISTRO</code>
+<b>• Device Name</b> : <code>$MODEL ($DEVICE_CODENAME)</code>
+<b>• Device Defconfig</b> : <code>$DEVICE_DEFCONFIG</code>
+<b>• Kernel Name</b> : <code>${KERNELNAME}</code>
+<b>• Kernel Version</b> : <code>${KERVER}</code>
+<b>• Builder Name</b> : <code>${KBUILD_BUILD_USER}</code>
+<b>• Builder Host</b> : <code>${KBUILD_BUILD_HOST}</code>
+<b>• Host Core Count</b> : <code>$PROCS</code>
+<b>• Compiler</b> : <code>${KBUILD_COMPILER_STRING}</code>
+<b>+------------------------------------+</b>
+"
+
 # Compile
 compile(){
-tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
 cd $DEVICE_CODENAME
 PATH="${PATH}:$(pwd)/clang/bin"
@@ -68,6 +91,7 @@ make -j$(nproc) ARCH=arm64 O=out \
 	errorr
 	exit 1
    fi
+
   git clone --depth=1 https://github.com/kentanglu/AnyKernel -b $DEVICE_CODENAME AnyKernel 
 	cp $IMAGE AnyKernel
 }
@@ -81,7 +105,7 @@ tg_post_msg "Mengirim Kernel $DEVICE_CODENAME..."
         -F chat_id="$TG_CHAT_ID" \
         -F "disable_web_page_preview=true" \
         -F parse_mode=markdown https://api.telegram.org/bot$TG_TOKEN/sendDocument \
-        -F caption="✨Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> | <b>${KBUILD_COMPILER_STRING}</b>✨"
+        -F caption="✨Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> | <b>$KERVER</b>✨"
 }
 
 # Fin Error
@@ -99,9 +123,9 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 
 # Zipping
 function zipping() {
-tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
+    msg "+--- Started Zipping ---+"
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]Lancelot[$RANDOMNAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]Lancelot[$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 compile
