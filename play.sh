@@ -34,7 +34,7 @@ CloneAtomClang(){
 }
 
 CloneGKClang(){
-    git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
+    git clone --depth=1 https://gitlab.com/AnggaR96s/Clang-GengKapak -b main clang
 }
 
 CloneCompiledEvaGcc(){
