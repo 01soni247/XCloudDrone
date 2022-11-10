@@ -19,8 +19,8 @@ DATE=$(date +"%F-%S")
 START=$(date +"%s")
 
 #Main2
-DEVICE_CODENAME=merlin
-DEVICE_DEFCONFIG=merlin_defconfig
+DEVICE_CODENAME=lancelot
+DEVICE_DEFCONFIG=lancelot_defconfig
 CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 LLD_VER="$("$CLANG_ROOTDIR"/bin/ld.lld --version | head -n 1)"
 export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
