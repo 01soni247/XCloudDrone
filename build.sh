@@ -19,8 +19,8 @@ DATE=$(date +"%F-%S")
 START=$(date +"%s")
 
 #Main2
-DEVICE_CODENAME=lancelot
-DEVICE_DEFCONFIG=lancelot_defconfig
+DEVICE_CODENAME=selene
+DEVICE_DEFCONFIG=selene_defconfig
 CLANG_VER="$("$CLANG_ROOTDIR"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 LLD_VER="$("$CLANG_ROOTDIR"/bin/ld.lld --version | head -n 1)"
 export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
@@ -29,12 +29,12 @@ DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
-export LOCALVERSION=/Feriska🍃
+export LOCALVERSION=/Azura🫧
 
 #MakeVersion
-VERSION=XQ1.6
+VERSION=R0.1T
 KERNELNAME=Sea
-NAME=Feriska
+NAME=Azura
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
