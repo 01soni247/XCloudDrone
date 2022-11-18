@@ -37,7 +37,7 @@ CloneGKClang(){
     git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
 }
 
-CloneProton(){
+ClProton(){
     git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b proton-clang-11 clang
 }
 
@@ -58,6 +58,6 @@ tg_post_msg() {
 # CloneCompiledEvaGcc
 # CloneSeaClang
 # CloneGKClang
-CloneProton
+ClProton
 END=$(date +"%s")
 DIFF=$(($END - $START))
