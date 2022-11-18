@@ -50,7 +50,7 @@ tg_post_msg() {
 # Compile
 compile(){
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
+git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
 cd $DEVICE_CODENAME
 PATH="${PATH}:$(pwd)/clang/bin"
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
