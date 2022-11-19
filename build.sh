@@ -29,10 +29,10 @@ DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
-export LOCALVERSION=/Azura🫧
+export LOCALVERSION=1/Azura🫧
 
 #MakeVersion
-VERSION=R0.1T
+VERSION=R0.1
 KERNELNAME=Sea
 NAME=Azura
 
@@ -102,7 +102,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][R-OSS][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 compile
