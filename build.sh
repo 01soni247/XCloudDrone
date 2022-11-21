@@ -64,8 +64,8 @@ make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     LD_LIBRARY_PATH="${ClangPath}/lib64:${LD_LIBRARY_PATH}" \
     CC=${ClangPath}/bin/clang \
+    LD=${ClangPath}/bin/ld.lld \
     NM=${ClangPath}/bin/llvm-nm \
-    CXX=${ClangPath}/bin/clang++ \
     AR=${ClangPath}/bin/llvm-ar \
     STRIP=${ClangPath}/bin/llvm-strip \
     OBJCOPY=${ClangPath}/bin/llvm-objcopy \
