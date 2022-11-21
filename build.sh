@@ -15,7 +15,6 @@ GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 
-DATE=$(date +"%F-%S")
 START=$(date +"%s")
 
 #Main2
@@ -31,13 +30,16 @@ export LOCALVERSION=1/Azura🫧
 ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
-wget -q  https://github.com/ZyCromerZ/Clang/releases/download/Clang-16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "Clang-16.0.0-20221118.tar.gz"
-tar -xf Clang-16.0.0-20221118.tar.gz -C $ClangPath
+rm -rf $ClangPath/*
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/15.0.0-20220307-release/Clang-15.0.0-20220307.tar.gz -O "Clang-15.0.0-20220307.tar.gz"
+tar -xf Clang-15.0.0-20220307.tar.gz -C $ClangPath
 
 #MakeVersion
 VERSION=R0.1
 KERNELNAME=Sea
 NAME=Azura
+
+DATE=$(date +"%F-%S")
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
