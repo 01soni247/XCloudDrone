@@ -54,10 +54,10 @@ tg_post_msg() {
   -d "parse_mode=html" \
   -d text="$1"
 }
-# CloneFourteenGugelClang
-# CloneCompiledEvaGcc
+CloneFourteenGugelClang
+CloneCompiledEvaGcc
 # CloneSeaClang
 # CloneGKClang
-ClProton
+# ClProton
 END=$(date +"%s")
 DIFF=$(($END - $START))
