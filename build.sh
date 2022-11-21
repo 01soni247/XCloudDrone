@@ -28,6 +28,12 @@ export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 export LOCALVERSION=1/Azura🫧
 
+ClangPath=${MainClangZipPath}
+[[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
+mkdir $ClangPath
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/Clang-16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "Clang-16.0.0-20221118.tar.gz"
+tar -xf Clang-16.0.0-20221118.tar.gz -C $ClangPath
+
 #MakeVersion
 VERSION=R0.1
 KERNELNAME=Sea
