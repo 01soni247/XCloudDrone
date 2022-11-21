@@ -17,6 +17,29 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 
 START=$(date +"%s")
 
+#MakeVersion
+VERSION=R0.1
+KERNELNAME=Sea
+NAME=Azura
+
+CloneKernel(){
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
+}
+
+CloneFourteenClang(){
+ClangPath=${MainClangZipPath}
+[[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
+mkdir $ClangPath
+rm -rf $ClangPath/*
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "clang-16.0.0-20221118.tar.gz"
+tar -xf clang-16.0.0-20221118.tar.gz -C $ClangPath
+}
+
+CloneCompiledGcc(){
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
+}
+
 #Main2
 DEVICE_CODENAME=selene
 DEVICE_DEFCONFIG=selene_defconfig
@@ -26,18 +49,7 @@ DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 export LOCALVERSION=1/Azura🫧
-
-ClangPath=${MainClangZipPath}
-[[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
-mkdir $ClangPath
-rm -rf $ClangPath/*
-wget -q  https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/3a785d33320c48b09f7d6fcf2a37fed702686fdc/clang-r437112.tar.gz -O "clang-r437112.tar.gz"
-tar -xf clang-r437112.tar.gz -C $ClangPath
-
-#MakeVersion
-VERSION=R0.1
-KERNELNAME=Sea
-NAME=Azura
+PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
 
 DATE=$(date +"%F-%S")
 
@@ -50,16 +62,14 @@ tg_post_msg() {
   -d "parse_mode=html" \
   -d text="$1"
 
+#Main Chat
+tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
+
 }
 
 # Compile
 compile(){
-tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
-git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 13 $GCCaPath --depth=1
-git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 13 $GCCbPath --depth=1      
-git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
 cd $DEVICE_CODENAME
-PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     LD_LIBRARY_PATH="${ClangPath}/lib:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
@@ -114,6 +124,9 @@ tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][R-OSS][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
+CloneKernel
+CloneFourteenClang
+CloneCompiledGcc
 compile
 zipping
 END=$(date +"%s")
