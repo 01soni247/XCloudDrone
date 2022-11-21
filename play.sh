@@ -24,7 +24,7 @@ CloneFourteenGugelClang(){
     mkdir $ClangPath
     wget -q  https://github.com/ZyCromerZ/Clang/releases/download/15.0.0-20220307-release/Clang-15.0.0-20220307.tar.gz -O "Clang-15.0.0-20220307.tar.gz"
     tar -xf Clang-15.0.0-20220307.tar.gz -C $ClangPath
-    rm -rf clang-r437112b.tar.gz
+    rm -rf Clang-15.0.0-20220307.tar.gz
 }
 
 CloneAtomClang(){
