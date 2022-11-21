@@ -22,9 +22,7 @@ CloneFourteenGugelClang(){
     ClangPath=${MainClangZipPath}
     [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
     mkdir $ClangPath
-    if [ ! -e "${MainPath}/clang-r437112b.tar.gz" ];then
         wget -q  https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r437112b.tar.gz -O "clang-r437112b.tar.gz"
-    fi
     tar -xf clang-r437112b.tar.gz -C $ClangPath
     rm -rf clang-r437112b.tar.gz
 }
