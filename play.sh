@@ -39,11 +39,6 @@ ClProton(){
     git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b proton-clang-11 clang
 }
 
-CloneCompiledGccTwelve(){
-        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 13 $GCCaPath --depth=1
-        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 13 $GCCbPath --depth=1
-}
-
 START=$(date +"%s")
 
 tg_post_msg() {
@@ -53,7 +48,6 @@ tg_post_msg() {
   -d text="$1"
 }
 CloneFourteenGugelClang
-CloneCompiledGccTwelve
 # CloneSeaClang
 # CloneGKClang
 # ClProton
