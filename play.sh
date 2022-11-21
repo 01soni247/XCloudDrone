@@ -22,9 +22,9 @@ CloneFourteenGugelClang(){
     ClangPath=${MainClangZipPath}
     [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
     mkdir $ClangPath
-    wget -q  https://github.com/ZyCromerZ/Clang/releases/download/15.0.0-20220307-release/Clang-15.0.0-20220307.tar.gz -O "Clang-15.0.0-20220307.tar.gz"
-    tar -xf Clang-15.0.0-20220307.tar.gz -C $ClangPath
-    rm -rf Clang-15.0.0-20220307.tar.gz
+    wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/clang-16.0.0-20221118.tar.gz -O "clang-16.0.0-20221118.tar.gz"
+    tar -xf clang-16.0.0-20221118.tar.gz -C $ClangPath
+    rm -rf clang-16.0.0-20221118.tar.gz
 }
 
 CloneAtomClang(){
