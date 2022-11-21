@@ -55,12 +55,13 @@ cd $DEVICE_CODENAME
 PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
-    CC=${CLANG_ROOTDIR}/bin/clang \
-    LD=${CLANG_ROOTDIR}/bin/ld.lld \
-    NM=${CLANG_ROOTDIR}/bin/llvm-nm \
-    STRIP=${CLANG_ROOTDIR}/bin/llvm-strip \
-    OBJCOPY=${CLANG_ROOTDIR}/bin/llvm-objcopy \
-    OBJDUMP=${CLANG_ROOTDIR}/bin/llvm-objdump \
+    CC=clang \
+    AS=llvm-as \
+    LD=ld.lld \
+    NM=llvm-nm \
+    OBJCOPY=llvm-objcopy \
+    OBJDUMP=llvm-objdump \
+    STRIP=llvm-strip \
     CROSS_COMPILE=aarch64-zyc-linux-gnu- \
     CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- \
     CLANG_TRIPLE=aarch64-linux-gnu- \
