@@ -21,9 +21,6 @@ START=$(date +"%s")
 #Main2
 DEVICE_CODENAME=selene
 DEVICE_DEFCONFIG=selene_defconfig
-CLANG_VER="$("$MainClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
-LLD_VER="$("$MainClangPath"/bin/ld.lld --version | head -n 1)"
-export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
@@ -83,7 +80,7 @@ tg_post_msg "Mengirim Kernel $DEVICE_CODENAME..."
         -F chat_id="$TG_CHAT_ID" \
         -F "disable_web_page_preview=true" \
         -F parse_mode=markdown https://api.telegram.org/bot$TG_TOKEN/sendDocument \
-        -F caption="✨Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b> | <b>${KBUILD_COMPILER_STRING}</b>✨"
+        -F caption="✨Compile took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>$DEVICE_CODENAME</b>✨"
 }
 
 # Fin Error
