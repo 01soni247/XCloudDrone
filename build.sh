@@ -52,7 +52,7 @@ compile(){
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
 cd $DEVICE_CODENAME
-PATH="${PATH}:$(pwd)/clang/bin"
+PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
@@ -61,9 +61,9 @@ make -j$(nproc) ARCH=arm64 O=out \
     STRIP=${CLANG_ROOTDIR}/bin/llvm-strip \
     OBJCOPY=${CLANG_ROOTDIR}/bin/llvm-objcopy \
     OBJDUMP=${CLANG_ROOTDIR}/bin/llvm-objdump \
-    CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
-    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi- \
-    2>&1 | tee error.log
+    CROSS_COMPILE=aarch64-zyc-linux-gnu- \
+    CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- \
+    CLANG_TRIPLE=aarch64-linux-gnu- \
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
