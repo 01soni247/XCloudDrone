@@ -41,9 +41,9 @@ ClProton(){
     git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b proton-clang-11 clang
 }
 
-CloneCompiledEvaGcc(){
-    git clone --depth=1 https://github.com/mvaisakh/gcc-arm64 $GCCaPath
-    git clone --depth=1 https://github.com/mvaisakh/gcc-arm $GCCbPath
+CloneCompiledGccTwelve(){
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
 }
 
 START=$(date +"%s")
@@ -55,7 +55,7 @@ tg_post_msg() {
   -d text="$1"
 }
 CloneFourteenGugelClang
-CloneCompiledEvaGcc
+CloneCompiledGccTwelve
 # CloneSeaClang
 # CloneGKClang
 # ClProton
