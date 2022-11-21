@@ -63,13 +63,13 @@ PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     LD_LIBRARY_PATH="${ClangPath}/lib:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
-    CC=${ClangPath}/bin/clang \
-    LD=${ClangPath}/bin/ld.lld \
-    NM=${ClangPath}/bin/llvm-nm \
-    AR=${ClangPath}/bin/llvm-ar \
-    STRIP=${ClangPath}/bin/llvm-strip \
-    OBJCOPY=${ClangPath}/bin/llvm-objcopy \
-    OBJDUMP=${ClangPath}/bin/llvm-objdump \
+    CC=clang \
+    LD=ld.lld \
+    NM=llvm-nm \
+    AR=llvm-ar \
+    STRIP=llvm-strip \
+    OBJCOPY=llvm-objcopy \
+    OBJDUMP=llvm-objdump \
     CROSS_COMPILE=aarch64-zyc-linux-gnu- \
     CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- \
     CLANG_TRIPLE=aarch64-linux-gnu- \
