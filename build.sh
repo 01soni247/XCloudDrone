@@ -23,7 +23,7 @@ KERNELNAME=Sea
 NAME=Azura
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
 }
 
 CloneFourteenClang(){
@@ -41,8 +41,8 @@ CloneCompiledGcc(){
 }
 
 #Main2
-DEVICE_CODENAME=merlin
-DEVICE_DEFCONFIG=merlin_defconfig
+DEVICE_CODENAME=selene
+DEVICE_DEFCONFIG=selene_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
