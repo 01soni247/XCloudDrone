@@ -83,6 +83,7 @@ make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     LD_LIBRARY_PATH="${ClangPath}/lib:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
     CC=clang \
+    LD_COMPAT=ld.lld \
     CROSS_COMPILE=$for64- \
     CROSS_COMPILE_ARM32=$for32- \
     CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
