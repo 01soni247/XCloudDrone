@@ -36,8 +36,12 @@ tar -xf clang-16.0.0-20221118.tar.gz -C $ClangPath
 }
 
 CloneCompiledGcc(){
-        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
-        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
+mkdir $GCCaPath
+mkdir $GCCbPath
+wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc64.tar.gz"
+tar -xf gcc64.tar.gz -C $GCCaPath
+wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc32.tar.gz"
+tar -xf gcc32.tar.gz -C $GCCbPath
 }
 
 #Main2
@@ -78,8 +82,8 @@ make -j$(nproc) ARCH=arm64 O=out \
     STRIP=llvm-strip \
     OBJCOPY=llvm-objcopy \
     OBJDUMP=llvm-objdump \
-    CROSS_COMPILE=aarch64-zyc-linux-gnu- \
-    CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- \
+    CROSS_COMPILE=aarch64-linux-android- \
+    CROSS_COMPILE_ARM32=arm-linux-androideabi- \
     CLANG_TRIPLE=aarch64-linux-gnu- \
 
    if ! [ -a "$IMAGE" ]; then
