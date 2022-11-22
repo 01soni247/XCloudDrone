@@ -23,7 +23,7 @@ KERNELNAME=Sea
 NAME=Azura
 UseGoldBinutils="y"
 UseZyCLLVM="n"
-UseGCCLLVM="n
+UseGCCLLVM="n"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
