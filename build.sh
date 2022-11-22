@@ -21,6 +21,7 @@ START=$(date +"%s")
 VERSION=R0.1Test
 KERNELNAME=Sea
 NAME=Azura
+UseGoldBinutils="n"
 
 CloneKernel(){
     git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
@@ -31,8 +32,8 @@ ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
 rm -rf $ClangPath/*
-wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "clang-16.0.0-20221118.tar.gz"
-tar -xf clang-16.0.0-20221118.tar.gz -C $ClangPath
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "Clang-16.0.0-20221118.tar.gz"
+tar -xf Clang-16.0.0-20221118.tar.gz -C $ClangPath
 }
 
 CloneCompiledGcc(){
@@ -51,7 +52,6 @@ DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 export LOCALVERSION=1t/Azura🫧
-PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH}
 
 DATE=$(date +"%F-%S")
 
@@ -87,8 +87,9 @@ fi
 echo "MorePlusPlus : $MorePlusPlus"
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
+    PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:${PATH} \
     LD_LIBRARY_PATH="${ClangPath}/lib:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
-    CC=clang \
+    CC=${ClangPath}/bin/clang \
     CROSS_COMPILE=$for64- \
     CROSS_COMPILE_ARM32=$for32- \
     CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
