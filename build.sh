@@ -36,10 +36,10 @@ tar -xf clang-16.0.0-20221118.tar.gz -C $ClangPath
 }
 
 CloneCompiledGcc(){
-        git clone https://github.com/ZyCromerZ/aarch64-linux-android-4.9 $GCCaPath --depth=1
-        git clone https://github.com/ZyCromerZ/arm-linux-androideabi-4.9 $GCCbPath --depth=1
-        for64=aarch64-linux-android
-        for32=arm-linux-androideabi
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
+        for64=aarch64-zyc-linux-gnu
+        for32=arm-zyc-linux-gnueabi
 }
 
 #Main2
