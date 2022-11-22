@@ -33,6 +33,8 @@ mkdir $ClangPath
 rm -rf $ClangPath/*
 wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "clang-16.0.0-20221118.tar.gz"
 tar -xf clang-16.0.0-20221118.tar.gz -C $ClangPath
+mkdir $GCCaPath
+mkdir $GCCbPath
 }
 
 CloneCompiledGcc(){
