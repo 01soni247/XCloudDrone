@@ -114,7 +114,6 @@ export LOCALVERSION=1/Azura🌺
                 AR=${PrefixDir}llvm-ar \
                 NM=${PrefixDir}llvm-nm \
                 STRIP=${PrefixDir}llvm-strip \
-                OBJDUMP=${PrefixDir}llvm-objdump \
                 READELF=${PrefixDir}llvm-readelf \
                 HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus} LLVM=1
 
