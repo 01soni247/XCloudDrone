@@ -18,7 +18,7 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 START=$(date +"%s")
 
 #MakeVersion
-VERSION=R1.0s
+VERSION=R1.0
 KERNELNAME=Sea
 NAME=Azura
 UseZyCLLVM="n"
