@@ -23,7 +23,7 @@ KERNELNAME=Sea
 NAME=Azura
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="y"
+UseGoldBinutils="n"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
@@ -54,7 +54,7 @@ DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KERNEL_NAME=$(cat "$DEVICE_CODENAME/arch/arm64/configs/$DEVICE_DEFCONFIG" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
 export KBUILD_BUILD_USER=Asyanx
-export KBUILD_BUILD_HOST=CircleCi
+export KBUILD_BUILD_HOST=Sabil29
 
 DATE=$(date +"%F-%S")
 
@@ -105,12 +105,18 @@ export LOCALVERSION=1t/Azura🫧
     echo "MorePlusPlus : $MorePlusPlus"
     make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
     make -j$(nproc) ARCH=arm64 O=out \
-                PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH} \
+               PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH} \
                 LD_LIBRARY_PATH="${ClangPath}/lib64:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
                 CC=clang \
                 CROSS_COMPILE=$for64- \
                 CROSS_COMPILE_ARM32=$for32- \
-                CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
+                CLANG_TRIPLE=aarch64-linux-gnu- \
+                AR=${PrefixDir}llvm-ar \
+                NM=${PrefixDir}llvm-nm \
+                STRIP=${PrefixDir}llvm-strip \
+                OBJDUMP=${PrefixDir}llvm-objdump \
+                READELF=${PrefixDir}llvm-readelf \
+                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus} LLVM=1
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
