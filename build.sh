@@ -21,9 +21,9 @@ START=$(date +"%s")
 VERSION=R0.1U
 KERNELNAME=Sea
 NAME=Azura
-UseGoldBinutils="y"
 UseZyCLLVM="n"
 UseGCCLLVM="n"
+UseGoldBinutils="y"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
@@ -69,39 +69,33 @@ tg_post_msg() {
 
 }
 
-# Main chat
-    tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
-
 # Compile
 compile(){
-    CLANG_VER="$("$ClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
-    LLD_VER="$("$ClangPath"/bin/ld.lld --version | head -n 1)"
-    export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
-    cd $DEVICE_CODENAME
-    export LOCALVERSION=1t/Azura🫧
+CLANG_VER="$("$ClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+LLD_VER="$("$ClangPath"/bin/ld.lld --version | head -n 1)"
+export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
+tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${ClangPath}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
+tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
+cd $DEVICE_CODENAME
+export LOCALVERSION=1t/Azura🫧
     MorePlusPlus=" "
     PrefixDir=""
     if [[ "$UseZyCLLVM" == "y" ]];then
         PrefixDir="${MainClangZipPath}-zyc/bin/"
-    elif [[ "$UseGCCLLVM" == "y" ]];then
-        PrefixDir="${GCCaPath}/bin/"
     else
         PrefixDir="${ClangPath}/bin/"
     fi
-    if [[ "$TypeBuilder" != *"SDClang"* ]];then
-        MorePlusPlus="HOSTCC=clang HOSTCXX=clang++"
-    else
-        MorePlusPlus="HOSTCC=gcc HOSTCXX=g++"
-    fi
     if [[ "$UseGoldBinutils" == "y" ]];then
-        MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${PrefixDir}ld $MorePlusPlus"
-        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld.gold $MorePlusPlus"
+        MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
     elif [[ "$UseGoldBinutils" == "m" ]];then
-        MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${PrefixDir}ld $MorePlusPlus"
-        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld $MorePlusPlus"
+        MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
     else
-        MorePlusPlus="LD=${PrefixDir}ld.lld HOSTLD=${PrefixDir}ld.lld $MorePlusPlus"
-        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld.lld $MorePlusPlus"
+        MorePlusPlus="LD=${ClangPath}/bin/ld.lld HOSTLD=${ClangPath}/bin/ld.lld $MorePlusPlus"
+    fi
+    if [[ -e ${GCCbPath}/bin/$for32-ld.lld ]];then
+        MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld.lld $MorePlusPlus"
+    else
+        MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld $MorePlusPlus"
     fi
     if [[ "$UseOBJCOPYBinutils" == "y" ]];then
         MorePlusPlus="OBJCOPY=$for64-objcopy $MorePlusPlus"
@@ -116,13 +110,7 @@ compile(){
                 CC=clang \
                 CROSS_COMPILE=$for64- \
                 CROSS_COMPILE_ARM32=$for32- \
-                CLANG_TRIPLE=aarch64-linux-gnu- \
-                AR=${PrefixDir}llvm-ar \
-                NM=${PrefixDir}llvm-nm \
-                STRIP=${PrefixDir}llvm-strip \
-                OBJDUMP=${PrefixDir}llvm-objdump \
-                READELF=${PrefixDir}llvm-readelf \
-                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus} LLVM=1
+                CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
