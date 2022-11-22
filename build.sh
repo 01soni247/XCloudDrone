@@ -149,7 +149,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][SC/NON][R-OSS][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][R-OSS][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 CloneKernel
