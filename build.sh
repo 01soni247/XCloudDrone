@@ -21,7 +21,7 @@ START=$(date +"%s")
 VERSION=R0.1U
 KERNELNAME=Sea
 NAME=Azura
-UseGoldBinutils="n"
+UseGoldBinutils="y"
 
 CloneKernel(){
     git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
