@@ -22,6 +22,9 @@ VERSION=R0.1U
 KERNELNAME=Sea
 NAME=Azura
 UseGoldBinutils="y"
+UseZyCLLVM="n"
+UseGCCLLVM="n
+UseOBJCOPYBinutils="n"
 
 CloneKernel(){
     git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
@@ -75,29 +78,51 @@ tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
 export LOCALVERSION=1t/Azura🫧
-MorePlusPlus=" "
-if [[ "$UseGoldBinutils" == "y" ]];then
-MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
-elif [[ "$UseGoldBinutils" == "m" ]];then
-MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
-else
-MorePlusPlus="LD=${ClangPath}/bin/ld.lld HOSTLD=${ClangPath}/bin/ld.lld $MorePlusPlus"
-fi
-[[ -e ${GCCaPath}/bin/$for64-ld.lld ]] && MorePlusPlus="LD=${GCCaPath}/bin/$for64-ld.lld HOSTLD=${GCCaPath}/bin/$for64-ld.lld"
-if [[ -e ${GCCbPath}/bin/$for32-ld.lld ]];then
-MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld.lld $MorePlusPlus"
-else
-MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld $MorePlusPlus"
-fi
-echo "MorePlusPlus : $MorePlusPlus"
-make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
-make -j$(nproc) ARCH=arm64 O=out \
-    PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:${PATH} \
-    LD_LIBRARY_PATH="${ClangPath}/lib:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
-    CC=clang \
-    CROSS_COMPILE=$for64- \
-    CROSS_COMPILE_ARM32=$for32- \
-    CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
+SendInfoLink
+    MorePlusPlus=" "
+    PrefixDir=""
+    if [[ "$UseZyCLLVM" == "y" ]];then
+        PrefixDir="${MainClangZipPath}-zyc/bin/"
+    elif [[ "$UseGCCLLVM" == "y" ]];then
+        PrefixDir="${GCCaPath}/bin/"
+    else
+        PrefixDir="${ClangPath}/bin/"
+    fi
+    if [[ "$TypeBuilder" != *"SDClang"* ]];then
+        MorePlusPlus="HOSTCC=clang HOSTCXX=clang++"
+    else
+        MorePlusPlus="HOSTCC=gcc HOSTCXX=g++"
+    fi
+    if [[ "$UseGoldBinutils" == "y" ]];then
+        MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${PrefixDir}ld $MorePlusPlus"
+        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld.gold $MorePlusPlus"
+    elif [[ "$UseGoldBinutils" == "m" ]];then
+        MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${PrefixDir}ld $MorePlusPlus"
+        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld $MorePlusPlus"
+    else
+        MorePlusPlus="LD=${PrefixDir}ld.lld HOSTLD=${PrefixDir}ld.lld $MorePlusPlus"
+        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld.lld $MorePlusPlus"
+    fi
+    if [[ "$UseOBJCOPYBinutils" == "y" ]];then
+        MorePlusPlus="OBJCOPY=$for64-objcopy $MorePlusPlus"
+    else
+        MorePlusPlus="OBJCOPY=${PrefixDir}llvm-objcopy $MorePlusPlus"
+    fi
+    echo "MorePlusPlus : $MorePlusPlus"
+    make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
+    make -j$(nproc) ARCH=arm64 O=out \
+                PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH} \
+                LD_LIBRARY_PATH="${ClangPath}/lib64:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
+                CC=clang \
+                CROSS_COMPILE=$for64- \
+                CROSS_COMPILE_ARM32=$for32- \
+                CLANG_TRIPLE=aarch64-linux-gnu- \
+                AR=${PrefixDir}llvm-ar \
+                NM=${PrefixDir}llvm-nm \
+                STRIP=${PrefixDir}llvm-strip \
+                OBJDUMP=${PrefixDir}llvm-objdump \
+                READELF=${PrefixDir}llvm-readelf \
+                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus} LLVM=1
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
