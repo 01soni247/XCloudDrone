@@ -97,11 +97,6 @@ export LOCALVERSION=1/Azura🌺
     else
         MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld $MorePlusPlus"
     fi
-    if [[ "$UseOBJCOPYBinutils" == "y" ]];then
-        MorePlusPlus="OBJCOPY=$for64-objcopy $MorePlusPlus"
-    else
-        MorePlusPlus="OBJCOPY=${PrefixDir}llvm-objcopy $MorePlusPlus"
-    fi
     echo "MorePlusPlus : $MorePlusPlus"
     make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
     make -j$(nproc) ARCH=arm64 O=out \
