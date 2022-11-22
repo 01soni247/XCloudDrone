@@ -18,12 +18,12 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 START=$(date +"%s")
 
 #MakeVersion
-VERSION=R0.1s
+VERSION=R1.0s
 KERNELNAME=Sea
 NAME=Azura
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="n"
+UseGoldBinutils="y"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
