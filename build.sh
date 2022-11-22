@@ -38,10 +38,8 @@ mkdir $GCCbPath
 }
 
 CloneCompiledGcc(){
-wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc64.tar.gz"
-tar -xf gcc64.tar.gz -C $GCCaPath
-wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc32.tar.gz"
-tar -xf gcc32.tar.gz -C $GCCbPath
+        git clone https://github.com/ZyCromerZ/aarch64-linux-android-4.9 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-linux-androideabi-4.9 $GCCbPath --depth=1
 }
 
 #Main2
