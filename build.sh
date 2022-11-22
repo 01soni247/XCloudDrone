@@ -38,6 +38,8 @@ tar -xf clang-16.0.0-20221118.tar.gz -C $ClangPath
 CloneCompiledGcc(){
         git clone https://github.com/ZyCromerZ/aarch64-linux-android-4.9 $GCCaPath --depth=1
         git clone https://github.com/ZyCromerZ/arm-linux-androideabi-4.9 $GCCbPath --depth=1
+        for64=aarch64-linux-android
+        for32=arm-linux-androideabi
 }
 
 #Main2
@@ -68,18 +70,22 @@ tg_post_msg() {
 compile(){
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
+MorePlusPlus=" "
+if [[ "$UseGoldBinutils" == "y" ]];then
+MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
+elif [[ "$UseGoldBinutils" == "m" ]];then
+MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
+else
+MorePlusPlus="LD=${ClangPath}/bin/ld.lld HOSTLD=${ClangPath}/bin/ld.lld $MorePlusPlus"
+fi
+echo "MorePlusPlus : $MorePlusPlus"
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     LD_LIBRARY_PATH="${ClangPath}/lib:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
     CC=clang \
-    NM=llvm-nm \
-    AR=llvm-ar \
-    STRIP=llvm-strip \
-    OBJCOPY=llvm-objcopy \
-    OBJDUMP=llvm-objdump \
-    CROSS_COMPILE=aarch64-linux-android- \
-    CROSS_COMPILE_ARM32=arm-linux-androideabi- \
-    CLANG_TRIPLE=aarch64-linux-gnu- \
+    CROSS_COMPILE=$for64- \
+    CROSS_COMPILE_ARM32=$for32- \
+    CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
