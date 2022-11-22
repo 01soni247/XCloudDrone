@@ -41,7 +41,7 @@ CloneCompiledGcc(){
 }
 
 #Main2
-DEVICE_CODENAME=merljn
+DEVICE_CODENAME=merlin
 DEVICE_DEFCONFIG=merlin_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
