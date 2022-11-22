@@ -78,12 +78,17 @@ MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $Mor
 else
 MorePlusPlus="LD=${ClangPath}/bin/ld.lld HOSTLD=${ClangPath}/bin/ld.lld $MorePlusPlus"
 fi
+[[ -e ${GCCaPath}/bin/$for64-ld.lld ]] && MorePlusPlus="LD=${GCCaPath}/bin/$for64-ld.lld HOSTLD=${GCCaPath}/bin/$for64-ld.lld"
+if [[ -e ${GCCbPath}/bin/$for32-ld.lld ]];then
+MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld.lld $MorePlusPlus"
+else
+MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld $MorePlusPlus"
+fi
 echo "MorePlusPlus : $MorePlusPlus"
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     LD_LIBRARY_PATH="${ClangPath}/lib:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
     CC=clang \
-    LD_COMPAT=ld \
     CROSS_COMPILE=$for64- \
     CROSS_COMPILE_ARM32=$for32- \
     CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
