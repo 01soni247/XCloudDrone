@@ -23,7 +23,7 @@ KERNELNAME=Sea
 NAME=Azura
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea-XQ.git -b main $DEVICE_CODENAME
 }
 
 CloneFourteenClang(){
@@ -41,8 +41,8 @@ CloneCompiledGcc(){
 }
 
 #Main2
-DEVICE_CODENAME=selene
-DEVICE_DEFCONFIG=selene_defconfig
+DEVICE_CODENAME=merljn
+DEVICE_DEFCONFIG=merlin_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
@@ -62,13 +62,11 @@ tg_post_msg() {
   -d "parse_mode=html" \
   -d text="$1"
 
-#Main Chat
-tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
-
 }
 
 # Compile
 compile(){
+tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
