@@ -23,7 +23,7 @@ KERNELNAME=Sea
 NAME=Feriska
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="m"
+UseGoldBinutils="n"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
