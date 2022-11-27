@@ -116,7 +116,7 @@ export LOCALVERSION=1F/Azura🌺
 	errorr
 	exit 1
    fi
-  git clone --depth=1 https://github.com/Himemoria/AnyKernel3 -b $DEVICE_CODENAME AnyKernel 
+  git clone --depth=1 https://github.com/Kentanglu/AnyKernel3 -b $DEVICE_CODENAME AnyKernel 
 	cp $IMAGE AnyKernel
         cp $DTBO AnyKernel
         mv $DTB AnyKernel/dtb
