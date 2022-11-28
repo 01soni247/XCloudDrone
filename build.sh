@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+L#!/usr/bin/env bash
 #
 # Copyright (C) 2021 a xyzprjkt property
 #
@@ -18,16 +18,16 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 START=$(date +"%s")
 
 #MakeVersion
-VERSION=XQ1.6s
+VERSION=R1.1F
 KERNELNAME=Sea
-NAME=Feriska
+NAME=Azura
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="n"
+UseGoldBinutils="m"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-XQ.git -b sea-slmk $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
 }
 
 CloneClang(){
@@ -35,8 +35,8 @@ ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
 rm -rf $ClangPath/*
-wget -q  https://github.com/ZyCromerZ/Clang/releases/download/14.0.6-20220724-release/Clang-14.0.6-20220724.tar.gz -O "Clang-14.0.6-20220724.tar.gz"
-tar -xf Clang-14.0.6-20220724.tar.gz -C $ClangPath
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "Clang-16.0.0-20221118.tar.gz"
+tar -xf Clang-16.0.0-20221118.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
@@ -47,8 +47,8 @@ CloneGcc(){
 }
 
 #Main2
-DEVICE_CODENAME=lancelot
-DEVICE_DEFCONFIG=lancelot_defconfig
+DEVICE_CODENAME=selene
+DEVICE_DEFCONFIG=selene_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
@@ -77,7 +77,7 @@ export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
 tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${ClangPath}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
-export LOCALVERSION=6s/Feriska🌺
+export LOCALVERSION=1F/Azura🌺
     MorePlusPlus=" "
     PrefixDir=""
     if [[ "$UseZyCLLVM" == "y" ]];then
@@ -149,7 +149,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][R-OSS][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 CloneKernel
