@@ -1,4 +1,4 @@
-L#!/usr/bin/env bash
+#!/usr/bin/env bash
 #
 # Copyright (C) 2021 a xyzprjkt property
 #
