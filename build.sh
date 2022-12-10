@@ -65,7 +65,6 @@ cd $DEVICE_CODENAME
     make -j$(nproc) ARCH=arm64 O=out \
                 PATH=$(pwd)/clang/bin:/usr/bin:${PATH} \
                 CC=clang \
-                LD=ld.lld \
                 NM=llvm-nm \
                 CROSS_COMPILE=aarch64-linux-gnu- \
                 CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
