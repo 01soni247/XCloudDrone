@@ -116,7 +116,6 @@ tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
 }
 CloneKernel
 CloneClang
-CloneGcc
 compile
 zipping
 END=$(date +"%s")
