@@ -23,7 +23,7 @@ KERNELNAME=Sea
 NAME=Kali
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-XQ.git -b sea-slmk $DEVICE_CODENAME
 }
 
 CloneClang(){
@@ -39,11 +39,6 @@ DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KERNEL_NAME=$(cat "$DEVICE_CODENAME/arch/arm64/configs/$DEVICE_DEFCONFIG" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
-
-UseZyCLLVM="n"
-UseGCCLLVM="n"
-UseGoldBinutils="n"
-UseOBJCOPYBinutils="n"
 
 DATE=$(date +"%F-%S")
 
@@ -67,24 +62,14 @@ tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
 export LOCALVERSION=/Kali🌀
-    MorePlusPlus=" "
-    if [[ ! -z "$(cat $KernelPath/out/.config | grep "CONFIG_LTO=y" )" ]] || [[ ! -z "$(cat $KernelPath/out/.config | grep "CONFIG_LTO_CLANG=y" )" ]];then
-        MorePlusPlus="LD=ld.lld HOSTLD=ld.lld LD_COMPAT=ld.lld"
-    else
-        if [[ -e ${GCCbPath}/bin/$for32-ld.lld ]];then
-            MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld.lld $MorePlusPlus"
-        else
-            MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld $MorePlusPlus"
-        fi
-    fi
-    if [[ "$TypeBuilder" == *"SDClang"* ]];then
-        MorePlusPlus="HOSTCC=gcc HOSTCXX=g++ $MorePlusPlus"
-    fi
     make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
     make -j$(nproc) ARCH=arm64 O=out \
                 PATH=${ClangPath}/bin:/usr/bin:${PATH} \
                 LD_LIBRARY_PATH="${ClangPath}/lib64:${LD_LIBRARY_PATH}" \
                 CC=clang \
+                LD=ld.lld \
+                HOSTLD=ld.lld \ 
+                LD_COMPAT=ld.lld \
                 CROSS_COMPILE=aarch64-linux-gnu- \
                 CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
                 CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
@@ -126,7 +111,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][R-OSS][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 CloneKernel
