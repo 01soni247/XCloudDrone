@@ -27,7 +27,7 @@ CloneKernel(){
 }
 
 CloneClang(){
-     git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
+     git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 $ClangPath
 }
 
 #Main2
@@ -67,6 +67,9 @@ export LOCALVERSION=/Kali🌀
                 PATH=${ClangPath}/bin:/usr/bin:${PATH} \
                 LD_LIBRARY_PATH="${ClangPath}/lib64:${LD_LIBRARY_PATH}" \
                 CC=clang \
+                LD=ld.lld \
+                HOSTLD=ld.lld \ 
+                LD_COMPAT=ld.lld \
                 CROSS_COMPILE=aarch64-linux-gnu- \
                 CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
                 CLANG_TRIPLE=aarch64-linux-gnu- ${MorePlusPlus}
