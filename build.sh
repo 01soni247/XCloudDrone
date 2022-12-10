@@ -61,13 +61,13 @@ tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 export LOCALVERSION=/Relin🍁
 cd $DEVICE_CODENAME
-    make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG \
-    make -j$(nproc) ARCH=arm64 O=out \
-                PATH=$(pwd)/clang/bin:/usr/bin:${PATH} \
-                CC=clang \
-                NM=llvm-nm \
-                CROSS_COMPILE=aarch64-linux-gnu- \
-                CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+PATH="${PATH}:$(pwd)/clang/bin"
+make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
+make -j$(nproc) ARCH=arm64 O=out \
+    CC=${CLANG_ROOTDIR}/bin/clang \
+    NM=${CLANG_ROOTDIR}/bin/llvm-nm \
+    CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
+    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
