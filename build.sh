@@ -27,7 +27,7 @@ CloneKernel(){
 }
 
 CloneClang(){
-     git clone --depth=1 https://github.com/GengKapak/GengKapak-clang -b 12 clang
+     git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b proton-clang-11 clang
 }
 
 #Main2
@@ -66,8 +66,9 @@ make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
     NM=${CLANG_ROOTDIR}/bin/llvm-nm \
+    LD=${CLANG_ROOTDIR}/bin/ld.lld \
     CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
-    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi- \
+    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
