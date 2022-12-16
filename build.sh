@@ -27,7 +27,7 @@ CloneKernel(){
 }
 
 CloneClang(){
-     git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b proton-clang-11 clang
+     git clone --depth=1 https://github.com/kdrag0n/proton-clang -b master clang
 }
 
 #Main2
@@ -67,10 +67,6 @@ make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
     NM=${CLANG_ROOTDIR}/bin/llvm-nm \
     LD=${CLANG_ROOTDIR}/bin/ld.lld \
-    AR=${CLANG_ROOTDIR}/bin/llvm-ar \
-    OBJCOPY=${CLANG_ROOTDIR}/bin/llvm-objcopy \
-    OBJDUMP=${CLANG_ROOTDIR}/bin/llvm-objdump \
-    STRIP=${CLANG_ROOTDIR}/bin/llvm-strip \
     CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
     CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
 
