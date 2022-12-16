@@ -27,7 +27,7 @@ CloneKernel(){
 }
 
 CloneClang(){
-     git clone --depth=1 https://github.com/kdrag0n/proton-clang -b master clang
+     git clone --depth=1 https://github.com/NusantaraDevs/clang -b dev/12.0 clang
 }
 
 #Main2
