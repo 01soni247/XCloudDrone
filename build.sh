@@ -31,8 +31,8 @@ CloneClang(){
 }
 
 #Main2
-DEVICE_CODENAME=merlin
-DEVICE_DEFCONFIG=merlin_defconfig
+DEVICE_CODENAME=lancelot
+DEVICE_DEFCONFIG=lancelot_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
