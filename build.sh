@@ -27,7 +27,7 @@ CloneKernel(){
 }
 
 CloneClang(){
-     git clone --depth=1 https://github.com/NusantaraDevs/clang -b dev/12.0 clang
+     git clone --depth=1 https://github.com/HANA-CI-Build-Project/proton-clang -b proton-clang-11 clang
 }
 
 #Main2
