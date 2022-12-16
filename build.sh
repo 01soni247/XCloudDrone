@@ -67,8 +67,6 @@ make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
     NM=${CLANG_ROOTDIR}/bin/llvm-nm \
     LD=${CLANG_ROOTDIR}/bin/ld.lld \
-    HOSTLD=${CLANG_ROOTDIR}/bin/ld.lld \
-    LD_COMPAT=${CLANG_ROOTDIR}/bin/ld.lld \
     CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
     CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
 
