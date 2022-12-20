@@ -42,8 +42,6 @@ wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch6
 tar -xf gcc64.tar.gz -C $GCCaPath
 wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc32.tar.gz"
 tar -xf gcc32.tar.gz -C $GCCbPath
-for64=aarch64-zyc-linux-gnu
-for32=arm-zyc-linux-gnueabi
 }
 
 #Main2
@@ -130,6 +128,7 @@ tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
 }
 CloneKernel
 CloneClang
+CloneGcc
 compile
 zipping
 END=$(date +"%s")
