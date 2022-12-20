@@ -27,7 +27,23 @@ CloneKernel(){
 }
 
 CloneClang(){
-     git clone --depth=1 https://github.com/kdrag0n/proton-clang -b master clang
+ClangPath=${MainClangZipPath}
+[[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
+mkdir $ClangPath
+rm -rf $ClangPath/*
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/15.0.0-20220307-release/Clang-15.0.0-20220307.tar.gz -O "Clang-15.0.0-20220307.tar.gz"
+tar -xf Clang-15.0.0-20220307.tar.gz -C $ClangPath
+}
+
+CloneGcc(){
+mkdir $GCCaPath
+mkdir $GCCbPath
+wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc64.tar.gz"
+tar -xf gcc64.tar.gz -C $GCCaPath
+wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc32.tar.gz"
+tar -xf gcc32.tar.gz -C $GCCbPath
+for64=aarch64-zyc-linux-gnu
+for32=arm-zyc-linux-gnueabi
 }
 
 #Main2
@@ -61,14 +77,16 @@ tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
 export LOCALVERSION=/Reylin🪷
-PATH="${PATH}:$(pwd)/clang/bin"
+PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
 make -j$(nproc) ARCH=arm64 O=out \
     CC=${CLANG_ROOTDIR}/bin/clang \
     NM=${CLANG_ROOTDIR}/bin/llvm-nm \
+    AR=${ClangPath}/bin/llvm-ar \
     LD=${CLANG_ROOTDIR}/bin/ld.lld \
-    CROSS_COMPILE=${CLANG_ROOTDIR}/bin/aarch64-linux-gnu- \
-    CROSS_COMPILE_ARM32=${CLANG_ROOTDIR}/bin/arm-linux-gnueabi-
+    CROSS_COMPILE=aarch64-linux-android- \
+    CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+    CLANG_TRIPLE=aarch64-linux-gnu- \
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
