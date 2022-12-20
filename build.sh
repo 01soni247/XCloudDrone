@@ -84,8 +84,8 @@ make -j$(nproc) ARCH=arm64 O=out \
     NM=${ClangPath}/bin/llvm-nm \
     AR=${ClangPath}/bin/llvm-ar \
     LD=${ClangPath}/bin/ld.lld \
-    CROSS_COMPILE=aarch64-zyc-linux-gnu- \
-    CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- \
+    CROSS_COMPILE=$for64- \
+    CROSS_COMPILE_ARM32=$for32- \
     CLANG_TRIPLE=aarch64-linux-gnu- \
 
    if ! [ -a "$IMAGE" ]; then
