@@ -35,8 +35,8 @@ tar -xf Clang-15.0.0-20220307.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
-        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
-        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 10 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 10 $GCCbPath --depth=1
         for64=aarch64-zyc-linux-gnu
         for32=arm-zyc-linux-gnueabi
 }
@@ -85,7 +85,7 @@ make -j$(nproc) ARCH=arm64 O=out \
     AR=${ClangPath}/bin/llvm-ar \
     LD=${ClangPath}/bin/ld.lld \
     CROSS_COMPILE=aarch64-zyc-linux-gnu- \
-    CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabii- \
+    CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- \
     CLANG_TRIPLE=aarch64-linux-gnu- \
 
    if ! [ -a "$IMAGE" ]; then
