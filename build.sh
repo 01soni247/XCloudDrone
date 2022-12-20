@@ -27,7 +27,7 @@ UseGoldBinutils="m"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-XQ.git -b sea-slmk $DEVICE_CODENAME
 }
 
 CloneClang(){
