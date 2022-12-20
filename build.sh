@@ -17,7 +17,7 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 
 
 #MakeVersion
-VERSION=XQ1.6
+VERSION=XQ1.6.5
 KERNELNAME=Sea
 NAME=Reylin
 
@@ -50,7 +50,7 @@ DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KERNEL_NAME=$(cat "$DEVICE_CODENAME/arch/arm64/configs/$DEVICE_DEFCONFIG" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
-export LOCALVERSION=/Reylin🪷
+export LOCALVERSION=6.5/Reylin🪷
 
 DATE=$(date +"%F-%S")
 START=$(date +"%s")
@@ -67,13 +67,15 @@ tg_post_msg() {
 
 }
 
-#MainChat
+# MainChat
+MainChat(){
+CLANG_VER="$("$ClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+export KBUILD_COMPILER_STRING="$CLANG_VER"
 tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${ClangPath}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
+}
 
 # Compile
 compile(){
-CLANG_VER="$("$ClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
-export KBUILD_COMPILER_STRING="$CLANG_VER"
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
 make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
@@ -129,6 +131,7 @@ tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
 CloneKernel
 CloneClang
 CloneGcc
+MainChat
 compile
 zipping
 END=$(date +"%s")
