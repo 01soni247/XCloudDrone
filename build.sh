@@ -35,8 +35,8 @@ tar -xf Clang-15.0.0-20220307.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
-        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 10 $GCCaPath --depth=1
-        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 10 $GCCbPath --depth=1
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
         for64=aarch64-zyc-linux-gnu
         for32=arm-zyc-linux-gnueabi
 }
