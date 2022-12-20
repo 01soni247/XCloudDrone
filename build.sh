@@ -35,7 +35,7 @@ ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
 rm -rf $ClangPath/*
-wget -q  https://github.com/ZyCromerZ/Clang/releases/download/14.0.6-20220724-release/Clang-14.0.6-20220724.tar.gz -O "CClang-14.0.6-20220724.tar.gz"
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/14.0.6-20220724-release/Clang-14.0.6-20220724.tar.gz -O "Clang-14.0.6-20220724.tar.gz"
 tar -xf Clang-14.0.6-20220724.tar.gz -C $ClangPath
 }
 
