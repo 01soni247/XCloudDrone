@@ -36,10 +36,10 @@ tar -xf Clang-15.0.0-20220307.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
-wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc64.tar.gz"
-tar -xf gcc64.tar.gz -C $GCCaPath
-wget -q https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/tags/android-12.0.0_r27.tar.gz -O "gcc32.tar.gz"
-tar -xf gcc32.tar.gz -C $GCCbPath
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 10 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 10 $GCCbPath --depth=1
+        for64=aarch64-zyc-linux-gnu
+        for32=arm-zyc-linux-gnueabi
 }
 
 #Main2
@@ -80,8 +80,8 @@ make -j$(nproc) ARCH=arm64 O=out \
     NM=${CLANG_ROOTDIR}/bin/llvm-nm \
     AR=${ClangPath}/bin/llvm-ar \
     LD=${CLANG_ROOTDIR}/bin/ld.lld \
-    CROSS_COMPILE=aarch64-linux-android- \
-    CROSS_COMPILE_ARM32=arm-linux-androideabi- \
+    CROSS_COMPILE=aarch64-zyc-linux-gnu- \
+    CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- \
     CLANG_TRIPLE=aarch64-linux-gnu- \
 
    if ! [ -a "$IMAGE" ]; then
