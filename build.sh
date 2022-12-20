@@ -15,14 +15,19 @@ GCCbPath=${MainPath}toolchains/GCC32
 MainZipGCCaPath=${MainPath}/GCC64-zip
 MainZipGCCbPath=${MainPath}/GCC32-zip
 
+START=$(date +"%s")
 
 #MakeVersion
 VERSION=XQ1.6.5
 KERNELNAME=Sea
 NAME=Reylin
+UseZyCLLVM="n"
+UseGCCLLVM="n"
+UseGoldBinutils="m"
+UseOBJCOPYBinutils="n"
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-XQ.git -b sea-slmk $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
 }
 
 CloneClang(){
@@ -30,13 +35,13 @@ ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
 rm -rf $ClangPath/*
-wget -q  https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/3a785d33320c48b09f7d6fcf2a37fed702686fdc/clang-r437112.tar.gz -O "clang-r437112.tar.gz"
-tar -xf clang-r437112.tar.gz -C $ClangPath
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/14.0.6-20220724-release/Clang-14.0.6-20220724.tar.gz -O "CClang-14.0.6-20220724.tar.gz"
+tar -xf Clang-14.0.6-20220724.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
-        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 10 $GCCaPath --depth=1
-        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 10 $GCCbPath --depth=1
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
         for64=aarch64-zyc-linux-gnu
         for32=arm-zyc-linux-gnueabi
 }
@@ -47,14 +52,13 @@ DEVICE_DEFCONFIG=lancelot_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
+export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
 export KERNEL_NAME=$(cat "$DEVICE_CODENAME/arch/arm64/configs/$DEVICE_DEFCONFIG" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
-export LOCALVERSION=6.5/Reylin🪷
+xport LOCALVERSION=6.5/Reylin🪷
 
 DATE=$(date +"%F-%S")
-START=$(date +"%s")
-PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}
 
 # Telegram
 export BOT_MSG_URL="https://api.telegram.org/bot$TG_TOKEN/sendMessage"
@@ -68,9 +72,9 @@ tg_post_msg() {
 }
 
 # MainChat
-MainChat(){
+Mainchat(){
 CLANG_VER="$("$ClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
-export KBUILD_COMPILER_STRING="$CLANG_VER"
+LLD_VER="$("$ClangPath"/bin/ld.lld --version | head -n 1)"
 tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0AKernel Version : <code>${KERVER}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${ClangPath}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
 }
 
@@ -78,15 +82,39 @@ tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNEL_NAME}</code>%0
 compile(){
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
-make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
-make -j$(nproc) ARCH=arm64 O=out \
-    CC=${ClangPath}/bin/clang \
-    NM=${ClangPath}/bin/llvm-nm \
-    AR=${ClangPath}/bin/llvm-ar \
-    LD=${ClangPath}/bin/ld.lld \
-    CROSS_COMPILE=$for64- \
-    CROSS_COMPILE_ARM32=$for32- \
-    CLANG_TRIPLE=aarch64-linux-gnu- \
+    MorePlusPlus=" "
+    PrefixDir=""
+    if [[ "$UseZyCLLVM" == "y" ]];then
+        PrefixDir="${MainClangZipPath}-zyc/bin/"
+    else
+        PrefixDir="${ClangPath}/bin/"
+    fi
+    if [[ "$UseGoldBinutils" == "y" ]];then
+        MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
+    elif [[ "$UseGoldBinutils" == "m" ]];then
+        MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
+    else
+        MorePlusPlus="LD=${ClangPath}/bin/ld.lld HOSTLD=${ClangPath}/bin/ld.lld $MorePlusPlus"
+    fi
+    if [[ -e ${GCCbPath}/bin/$for32-ld.lld ]];then
+        MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld.lld $MorePlusPlus"
+    else
+        MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld $MorePlusPlus"
+    fi
+    echo "MorePlusPlus : $MorePlusPlus"
+    make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
+    make -j$(nproc) ARCH=arm64 O=out \
+               PATH=${ClangPath}/bin:${GCCaPath}/bin:${GCCbPath}/bin:/usr/bin:${PATH} \
+                LD_LIBRARY_PATH="${ClangPath}/lib64:${GCCaPath}/lib:${GCCbPath}/lib:${LD_LIBRARY_PATH}" \
+                CC=clang \
+                CROSS_COMPILE=$for64- \
+                CROSS_COMPILE_ARM32=$for32- \
+                CLANG_TRIPLE=aarch64-linux-gnu- \
+                AR=${PrefixDir}llvm-ar \
+                NM=${PrefixDir}llvm-nm \
+                STRIP=${PrefixDir}llvm-strip \
+                READELF=${PrefixDir}llvm-readelf \
+                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus}
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
@@ -125,13 +153,13 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION][$NAME]$DEVICE_CODENAME[$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 CloneKernel
 CloneClang
 CloneGcc
-MainChat
+Mainchat
 compile
 zipping
 END=$(date +"%s")
