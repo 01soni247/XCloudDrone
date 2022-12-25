@@ -18,7 +18,7 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 START=$(date +"%s")
 
 #MakeVersion
-VERSION=R1.1F
+VERSION=R1.2
 KERNELNAME=Sea
 NAME=Azura
 UseZyCLLVM="n"
@@ -118,6 +118,8 @@ cd $DEVICE_CODENAME
    fi
   git clone --depth=1 https://github.com/Kentanglu/AnyKernel3 -b $DEVICE_CODENAME AnyKernel 
 	cp $IMAGE AnyKernel
+        cp $DTBO AnyKernel
+        mv $DTB AnyKernel/dtb
 }
 
 # Push kernel to channel
