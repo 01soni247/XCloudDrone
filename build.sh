@@ -53,7 +53,7 @@ IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
 export KERNEL_NAME=$(cat "$DEVICE_CODENAME/arch/arm64/configs/$DEVICE_DEFCONFIG" | grep "CONFIG_LOCALVERSION=" | sed 's/CONFIG_LOCALVERSION="-*//g' | sed 's/"*//g' )
-export LOCALVERSION=2/Azura🪷
+export LOCALVERSION=2/Azura🐙
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 
