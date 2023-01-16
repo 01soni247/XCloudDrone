@@ -20,7 +20,7 @@ START=$(date +"%s")
 #MakeVersion
 VERSION=R1.2
 KERNELNAME=Sea
-NAME=Azura
+NAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
 UseGoldBinutils="m"
@@ -52,7 +52,7 @@ DEVICE_DEFCONFIG=selene_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
-export LOCALVERSION=2/Azua🐙
+export LOCALVERSION=2/RedSquid🐙
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 
