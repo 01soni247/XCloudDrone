@@ -49,6 +49,8 @@ CloneGcc(){
 #Main2
 DEVICE_CODENAME=selene
 DEVICE_DEFCONFIG=selene_defconfig
+GCC_VER="$("$GCCaPath"/bin/aarch64-zyc-linux-gnu-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
+GLLD_VER="$("$GCCaPath"/bin/ld.lld --version | head -n 1)"
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
@@ -74,7 +76,7 @@ compile(){
 CLANG_VER="$("$ClangPath"/bin/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 LLD_VER="$("$ClangPath"/bin/ld.lld --version | head -n 1)"
 export KBUILD_COMPILER_STRING="$CLANG_VER with $LLD_VER"
-tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNELNAME}</code>%0AKernel Version : <code>${VERSION}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${ClangPath}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
+tg_post_msg "<b>KernelCompiler</b>%0AKernel Name : <code>${KERNELNAME}</code>%0AKernel Version : <code>${VERSION}</code>%0ABuild Date : <code>${DATE}</code>%0ABuilder Name : <code>${KBUILD_BUILD_USER}</code>%0ABuilder Host : <code>${KBUILD_BUILD_HOST}</code>%0ADevice Defconfig: <code>${DEVICE_DEFCONFIG}</code>%0AClang Version : <code>${KBUILD_COMPILER_STRING}</code>%0AClang Rootdir : <code>${ClangPath}</code>%0AGCC Version : <code>${GCC_VER}</code>%0AGCC Rootdir : <code>${GCCaPath}</code>%0AKernel Rootdir : <code>${KERNEL_ROOTDIR}</code>"
 tg_post_msg "<b>XCloudDrone:</b><code>Compile $DEVICE_CODENAME DI Mulai</code>"
 cd $DEVICE_CODENAME
     MorePlusPlus=" "
