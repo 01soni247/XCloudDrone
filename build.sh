@@ -20,7 +20,7 @@ START=$(date +"%s")
 #MakeVersion
 VERSION=XQ1.6
 KERNELNAME=Sea
-TYPE=NON-OSS
+TYPE=qOSS
 NAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
