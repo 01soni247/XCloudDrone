@@ -18,8 +18,9 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 START=$(date +"%s")
 
 #MakeVersion
-VERSION=R1.2
+VERSION=XQ1.6
 KERNELNAME=Sea
+TYPE=NON-OSS
 NAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
@@ -27,7 +28,7 @@ UseGoldBinutils="m"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-XQ.git -b sea-slmk $DEVICE_CODENAME
 }
 
 CloneClang(){
@@ -47,14 +48,14 @@ CloneGcc(){
 }
 
 #Main2
-DEVICE_CODENAME=selene
-DEVICE_DEFCONFIG=selene_defconfig
+DEVICE_CODENAME=lancelot
+DEVICE_DEFCONFIG=lancelot_defconfig
 GCC_VER="$("$GCCaPath"/bin/aarch64-zyc-linux-gnu-gcc --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
 GLLD_VER="$("$GCCaPath"/bin/ld.lld --version | head -n 1)"
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
-export LOCALVERSION=2/RedSquid🐙
+export LOCALVERSION=/RedSquid🐙
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 
@@ -152,7 +153,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][R-OSS][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][$TYPE][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 CloneKernel
