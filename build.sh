@@ -24,7 +24,7 @@ TYPE=qOSS
 NAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="m"
+UseGoldBinutils="n"
 UseOBJCOPYBinutils="n"
 
 CloneKernel(){
