@@ -21,7 +21,7 @@ START=$(date +"%s")
 VERSION=XQ1.6
 KERNELNAME=Sea
 TYPE=Q-OSS
-NAME=RedSquid
+CODENAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
 UseGoldBinutils="n"
@@ -160,7 +160,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
 function zipping() {
 tg_post_msg "Proses Zipping Kernel $DEVICE_CODENAME..."
     cd AnyKernel || exit 1
-    zip -r9 [$VERSION]$DEVICE_CODENAME[$NAME][$TYPE][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
+    zip -r9 [$VERSION][$TYPE]$DEVICE_CODENAME[$CODENAME][$KERNELNAME]-$DATE.zip * -x .git README.md *placeholder
     cd ..
 }
 CloneKernel
