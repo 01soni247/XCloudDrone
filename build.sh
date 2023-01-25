@@ -26,6 +26,7 @@ UseZyCLLVM="n"
 UseGCCLLVM="n"
 UseGoldBinutils="n"
 UseOBJCOPYBinutils="n"
+TypeBuilder="n"
 
 CloneKernel(){
     git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-XQ.git -b sea-slmk $DEVICE_CODENAME
@@ -82,20 +83,30 @@ cd $DEVICE_CODENAME
     PrefixDir=""
     if [[ "$UseZyCLLVM" == "y" ]];then
         PrefixDir="${MainClangZipPath}-zyc/bin/"
+    elif [[ "$UseGCCLLVM" == "y" ]];then
+        PrefixDir="${GCCaPath}/bin/"
     else
         PrefixDir="${ClangPath}/bin/"
     fi
-    if [[ "$UseGoldBinutils" == "y" ]];then
-        MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
-    elif [[ "$UseGoldBinutils" == "m" ]];then
-        MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${ClangPath}/bin/ld $MorePlusPlus"
+    if [[ "$TypeBuilder" != *"SDClang"* ]];then
+        MorePlusPlus="HOSTCC=clang HOSTCXX=clang++"
     else
-        MorePlusPlus="LD=${ClangPath}/bin/ld.lld HOSTLD=${ClangPath}/bin/ld.lld $MorePlusPlus"
+        MorePlusPlus="HOSTCC=gcc HOSTCXX=g++"
     fi
-    if [[ -e ${GCCbPath}/bin/$for32-ld.lld ]];then
-        MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld.lld $MorePlusPlus"
+    if [[ "$UseGoldBinutils" == "y" ]];then
+        MorePlusPlus="LD=$for64-ld.gold LDGOLD=$for64-ld.gold HOSTLD=${PrefixDir}ld $MorePlusPlus"
+        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld.gold $MorePlusPlus"
+    elif [[ "$UseGoldBinutils" == "m" ]];then
+        MorePlusPlus="LD=$for64-ld LDGOLD=$for64-ld.gold HOSTLD=${PrefixDir}ld $MorePlusPlus"
+        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld $MorePlusPlus"
     else
-        MorePlusPlus="LD_COMPAT=${GCCbPath}/bin/$for32-ld $MorePlusPlus"
+        MorePlusPlus="LD=${PrefixDir}ld.lld HOSTLD=${PrefixDir}ld.lld $MorePlusPlus"
+        [[ "$UseGCCLLVM" == "y" ]] && MorePlusPlus="LD_COMPAT=$for32-ld.lld $MorePlusPlus"
+    fi
+    if [[ "$UseOBJCOPYBinutils" == "y" ]];then
+        MorePlusPlus="OBJCOPY=$for64-objcopy $MorePlusPlus"
+    else
+        MorePlusPlus="OBJCOPY=${PrefixDir}llvm-objcopy $MorePlusPlus"
     fi
     echo "MorePlusPlus : $MorePlusPlus"
     make -j$(nproc) O=out ARCH=arm64 $DEVICE_DEFCONFIG
@@ -110,7 +121,7 @@ cd $DEVICE_CODENAME
                 NM=${PrefixDir}llvm-nm \
                 STRIP=${PrefixDir}llvm-strip \
                 READELF=${PrefixDir}llvm-readelf \
-                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus}
+                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus} LLVM=1
 
    if ! [ -a "$IMAGE" ]; then
 	errorr
