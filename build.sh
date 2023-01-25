@@ -20,7 +20,7 @@ START=$(date +"%s")
 #MakeVersion
 VERSION=XQ1.6
 KERNELNAME=Sea
-TYPE=qOSS
+TYPE=Q-OSS
 NAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
@@ -42,8 +42,8 @@ tar -xf Clang-16.0.0-20221118.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
-        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 $GCCaPath --depth=1
-        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12 $GCCbPath --depth=1
+        git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 13 $GCCaPath --depth=1
+        git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 13 $GCCbPath --depth=1
         for64=aarch64-zyc-linux-gnu
         for32=arm-zyc-linux-gnueabi
 }
