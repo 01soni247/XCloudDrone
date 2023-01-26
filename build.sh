@@ -37,8 +37,8 @@ ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
 rm -rf $ClangPath/*
-wget -q  https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-17.0.0-20230126-1809-release/WeebX-Clang-17.0.0-20230126-1809.tar.gz -O "WeebX-Clang-17.0.0-20230126-1809.tar.gz"
-tar -xf WeebX-Clang-17.0.0-20230126-1809.tar.gz -C $ClangPath
+wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "Clang-16.0.0-20221118.tar.gz"
+tar -xf Clang-16.0.0-20221118.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
