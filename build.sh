@@ -37,8 +37,8 @@ ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
 rm -rf $ClangPath/*
-wget -q  https://github.com/ZyCromerZ/Clang/releases/download/16.0.0-20221118-release/Clang-16.0.0-20221118.tar.gz -O "Clang-16.0.0-20221118.tar.gz"
-tar -xf Clang-16.0.0-20221118.tar.gz -C $ClangPath
+wget -q  https://github.com/XSans0/WeebX-Clang/releases/download/WeebX-Clang-17.0.0-20230126-1809-release/WeebX-Clang-17.0.0-20230126-1809.tar.gz -O "WeebX-Clang-17.0.0-20230126-1809.tar.gz"
+tar -xf WeebX-Clang-17.0.0-20230126-1809.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
@@ -121,10 +121,9 @@ cd $DEVICE_CODENAME
                 NM=${PrefixDir}llvm-nm \
                 STRIP=${PrefixDir}llvm-strip \
                 READELF=${PrefixDir}llvm-readelf \
-                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus} LLVM=1
+                HOSTAR=${PrefixDir}llvm-ar ${MorePlusPlus} LLVM=1 2>&1 | tee "$KERNEL_LOG"
 
    if ! [ -a "$IMAGE" ]; then
-	errorr
 	exit 1
    fi
   git clone --depth=1 https://github.com/Kentanglu/AnyKernel3 -b $DEVICE_CODENAME AnyKernel 
@@ -144,7 +143,7 @@ tg_post_msg "Mengirim Kernel $DEVICE_CODENAME..."
 }
 
 # Fin Error
-function errorr() {
+if [[ -f "$KERNEL_LOG" ]]; then
 tg_post_msg "Terjadi Error Dalam Proses Compile❌"
     cd out
     LOG=$(echo error.log)
@@ -154,7 +153,7 @@ tg_post_msg "Terjadi Error Dalam Proses Compile❌"
         -d parse_mode=markdown https://api.telegram.org/bot$TG_TOKEN/sendDocument \
         -d caption="Build throw an error(s)"
     exit 1
-}
+fi
 
 # Zipping
 function zipping() {
