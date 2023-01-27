@@ -25,7 +25,7 @@ CODENAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
 UseGoldBinutils="y"
-UseOBJCOPYBinutils="y"
+UseOBJCOPYBinutils="n"
 TypeBuilder="n"
 
 CloneKernel(){
