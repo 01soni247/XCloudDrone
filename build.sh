@@ -24,8 +24,8 @@ TYPE=Q-OSS
 CODENAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="n"
-UseOBJCOPYBinutils="n"
+UseGoldBinutils="y"
+UseOBJCOPYBinutils="y"
 TypeBuilder="n"
 
 CloneKernel(){
