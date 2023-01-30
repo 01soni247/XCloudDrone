@@ -6,6 +6,7 @@ jobs:
    steps:
       - run:
           command: |
+            apt-get update && apt-get -y install glibc-source
             branch=$CIRCLE_BRANCH
             git clone https://$githubKey@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git -b $branch builder_kernel --depth=1
             cd builder_kernel
