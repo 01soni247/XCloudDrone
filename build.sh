@@ -24,7 +24,7 @@ TYPE=Q-OSS
 CODENAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="n"
+UseGoldBinutils="m"
 UseOBJCOPYBinutils="n"
 TypeBuilder="n"
 
