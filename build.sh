@@ -24,7 +24,7 @@ TYPE=Q-OSS
 CODENAME=RedSquid
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="y"
+UseGoldBinutils="n"
 UseOBJCOPYBinutils="n"
 TypeBuilder="n"
 
@@ -37,8 +37,8 @@ ClangPath=${MainClangZipPath}
 [[ "$(pwd)" != "${MainPath}" ]] && cd "${MainPath}"
 mkdir $ClangPath
 rm -rf $ClangPath/*
-wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r475365b.tar.gz -O "aosp-clang.tar.gz"
-tar -xf aosp-clang.tar.gz -C $ClangPath
+wget -q https://github.com/ZyCromerZ/Clang/releases/download/17.0.0-20230130-release/Clang-17.0.0-20230130.tar.gz -O "Clang-17.0.0-20230130.tar.gz"
+tar -xf Clang-17.0.0-20230130.tar.gz -C $ClangPath
 }
 
 CloneGcc(){
