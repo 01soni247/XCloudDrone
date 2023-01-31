@@ -24,7 +24,7 @@ TYPE=R-OSS
 CODENAME=Wave
 UseZyCLLVM="n"
 UseGCCLLVM="n"
-UseGoldBinutils="m"
+UseGoldBinutils="n"
 UseOBJCOPYBinutils="n"
 TypeBuilder="n"
 
