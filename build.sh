@@ -18,10 +18,10 @@ MainZipGCCbPath=${MainPath}/GCC32-zip
 START=$(date +"%s")
 
 #MakeVersion
-VERSION=XQ1.6
+VERSION=R1.3
 KERNELNAME=Sea
-TYPE=Q-OSS
-CODENAME=RedSquid
+TYPE=R-OSS
+CODENAME=Wave
 UseZyCLLVM="n"
 UseGCCLLVM="n"
 UseGoldBinutils="m"
@@ -29,7 +29,7 @@ UseOBJCOPYBinutils="n"
 TypeBuilder="n"
 
 CloneKernel(){
-    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-XQ.git -b sea-slmk $DEVICE_CODENAME
+    git clone --depth=1 https://$githubKey@github.com/Kentanglu/Sea_Kernel-Selene.git -b twelve $DEVICE_CODENAME
 }
 
 CloneClang(){
@@ -49,12 +49,12 @@ CloneGcc(){
 }
 
 #Main2
-DEVICE_CODENAME=lancelot
-DEVICE_DEFCONFIG=lancelot_defconfig
+DEVICE_CODENAME=selene
+DEVICE_DEFCONFIG=selene_defconfig
 IMAGE=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/Image.gz-dtb
 DTBO=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dtbo.img
 DTB=$(pwd)/$DEVICE_CODENAME/out/arch/arm64/boot/dts/mediatek/mt6768.dtb
-export LOCALVERSION=/RedSquid🐙
+export LOCALVERSION=3/Wave🌊
 export KBUILD_BUILD_USER=Asyanx
 export KBUILD_BUILD_HOST=CircleCi
 
@@ -129,6 +129,8 @@ cd $DEVICE_CODENAME
    fi
   git clone --depth=1 https://github.com/Kentanglu/AnyKernel3 -b $DEVICE_CODENAME AnyKernel 
 	cp $IMAGE AnyKernel
+        cp $DTBO AnyKernel
+        mv $DTB AnyKernel/dtb
 }
 
 # Push kernel to channel
